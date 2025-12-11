@@ -6,11 +6,12 @@ import Home from "./pages/Home"
 import Products from "./pages/Products"
 import ProductInfo from "./pages/ProductInfo"
 import './styles/globalStyle.css'
+import CartPage from "./pages/CartPage"
 const Root = () => {
   return (
      <>
       <Navbar/>
-       <ProductInfo/>
+      <CartPage/>
      </>
   )
 }
