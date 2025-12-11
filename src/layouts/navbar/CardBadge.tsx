@@ -18,6 +18,7 @@ export default function CardBadge({ Icon }: { Icon?: ReactNode }) {
       <StyledBadge badgeContent={5} color="primary">
        {
         Icon ? Icon : <ShoppingCartIcon />
+        
        }
       </StyledBadge>
     </IconButton>

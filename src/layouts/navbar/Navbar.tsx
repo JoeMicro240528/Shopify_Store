@@ -16,10 +16,16 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import SearchFiled from './SearchFiled';
 import CardBadge from './CardBadge';
+
+import { useNavigate } from 'react-router';
+
 const pages = ['Home', 'Categories', 'All Products'];
-const settings = ['Profile','Logout'];
+const settings = ['Profile', 'Logout'];
 
 function Navbar() {
+  
+    const navgate = useNavigate();
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -39,13 +45,17 @@ function Navbar() {
     };
 
 
-  
+
     return (
-        <AppBar sx={{ backgroundColor: '#F4F4F5', color: 'black', borderRadius:20 }} position="static">
+        <AppBar sx={{ backgroundColor: '#F4F4F5', color: 'black', borderRadius: 20 }} position="static">
             <Container>
                 <Toolbar disableGutters>
                     <Storefront color='primary' fontSize='large' sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
+                    
+                        <Typography
+                        onClick={()=>{
+                            navgate('/')
+                        }}
                         variant="h6"
                         noWrap
                         component="a"
@@ -60,8 +70,9 @@ function Navbar() {
 
                         }}
                     >
-                       Shopify
-                    </Typography>
+                         Shopify
+                          </Typography>
+                   
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, color: 'black' }}>
                         <IconButton
@@ -91,13 +102,21 @@ function Navbar() {
                             sx={{ display: { xs: 'block', md: 'none' }, }}
                         >
                             {pages.map((page) => (
-                                <MenuItem sx={{textTransform:'capitalize'}} color='info' key={page} onClick={handleCloseNavMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                                <MenuItem
+                                
+                                sx={{ textTransform: 'capitalize' }} color='info' key={page} onClick={handleCloseNavMenu}>
+                                    <Typography 
+                                        onClick={()=>{
+                                       navgate(`/${page.toLowerCase()}`)
+                                  }}
+                                    sx={{ textAlign: 'center' }} >
+                                       {page}
+                                    </Typography>
                                 </MenuItem>
                             ))}
-                             <MenuItem >
-                                    <Typography sx={{ textAlign: 'center' }}><SearchFiled /></Typography>
-                                </MenuItem>
+                            <MenuItem >
+                                <Typography sx={{ textAlign: 'center' }}><SearchFiled /></Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <Storefront color='primary' fontSize='large' sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -106,6 +125,9 @@ function Navbar() {
                         noWrap
                         component="a"
                         href="#app-bar-with-responsive-menu"
+                                 onClick={()=>{
+                                       navgate(`/`)
+                                  }}
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -116,34 +138,49 @@ function Navbar() {
                             textDecoration: 'none',
                         }}
                     >
-                       Shopify
+                     Shopify
                     </Typography>
-                    <Box sx={{ flexGrow: 1,  display: { xs: 'none', md: 'flex' }, }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, }}>
                         {pages.map((page) => (
                             <Button
-                           
+                                          
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'black', fontWeight: '500',textTransform:'capitalize', fontSize: '15px', display: 'block', transition: 'color 0.3s', '&:hover': { color: 'primary.main' } }}
+                                sx={{ my: 2, color: 'black', fontWeight: '500', textTransform: 'capitalize', fontSize: '15px', display: 'block', transition: 'color 0.3s', '&:hover': { color: 'primary.main' } }}
                             >
+                             <Typography
+                                onClick={()=>{
+                                       navgate(`/${page.toLowerCase()}`)
+                                  }}
+                             color="initial">
                                 {page}
+                             </Typography>
                             </Button>
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0, mr: 2, display: { xs: 'none', md: 'block' } }}>
-                       <SearchFiled />
+                        <SearchFiled />
                     </Box>
-                     <Box sx={{ flexGrow: 0, mr: 2 }}>
-                         <Box sx={{ display: 'inline-block', mr: 2 }}></Box>
-                         <CardBadge Icon={<FavoriteBorder  />} />
-                     </Box>
-                     <Box sx={{ flexGrow: 0, mr: 2 }}>
-                         <CardBadge Icon={<ShoppingCartIcon  />} />
-                     </Box>
+                    <Box
+                      onClick={()=>{
+                                       navgate(`/favorit`)
+                                  }}
+                    sx={{ flexGrow: 0, fontSize: { xs: "5px" }, mr: { md: 2, xs: 0.5 } }}>
+                       
+                              <CardBadge Icon={<FavoriteBorder />}  />
+                    </Box>
+                    <Box 
+                       onClick={()=>{
+                                       navgate(`/cart`)
+                                  }}
+                    sx={{ flexGrow: 0, mr: { md: 2, xs: 0.5 }, fontSize: { xs: "5px" } }}>
+                           <CardBadge Icon={<ShoppingCartIcon />} />
+
+                    </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="Yousef Albushra" src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -164,7 +201,11 @@ function Navbar() {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                                    <Typography sx={{ textAlign: 'center' }}
+                                    onClick={()=>{
+                                       navgate(`/${setting.toLowerCase()}`)
+                                  }}
+                                    >{setting}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

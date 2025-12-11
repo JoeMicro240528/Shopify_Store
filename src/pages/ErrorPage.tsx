@@ -1,7 +1,20 @@
 import { ArrowBack, CheckCircleOutline, Refresh, Storefront } from "@mui/icons-material"
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material"
+import { Link,useRouteError,isRouteErrorResponse } from "react-router"
 
 const ErrorPage = () => {
+  const error = useRouteError();
+
+  let errorStatus:number;
+  let errorText:string;
+
+  if(isRouteErrorResponse(error)){
+      errorStatus=error.status;
+      errorText=error.statusText
+  }else{
+      errorStatus=404;
+      errorText='Page Not Found';
+  }
   return (
     <>
       <Container>
@@ -54,7 +67,7 @@ const ErrorPage = () => {
             gap: 2
           }}>
             <Button variant="contained" sx={{ width: '200px', color: "#FFF", borderRadius: 2 }}>
-              Go to Homepage
+             <Link replace={true } style={{textDecoration:'none',color:'inherit'}} to='/'>Go to home page</Link>
             </Button>
             <Button variant="contained" sx={{ background: "#CBD5E1", color: "#333", width: '200px', borderRadius: 2 }}>
               Contact Support
@@ -81,7 +94,8 @@ const ErrorPage = () => {
               </Box>
             </Stack>
           </Box>
-          <Typography color="#94a3b8" variant="body2">Error Code: 404</Typography>
+          <Typography color="#94a3b8" variant="body2">Error Text: {errorText}</Typography>
+           <Typography color="#94a3b8" variant="body2">Error Code: {errorStatus}</Typography>
         </Box>
       </Container>
     </>
