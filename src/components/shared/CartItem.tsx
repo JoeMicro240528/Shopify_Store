@@ -3,7 +3,7 @@ import type { TProduct } from "../../types/product";
 import NumberSpinner from './NumberSpinner';
 import { DeleteOutline } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { changeQuantity, removeFromCart } from "../../store/cart/cartSlice";
+import { removeFromCart } from "../../store/cart/cartSlice";
 const CartItem = ({ item }: { item: TProduct }) => {
     const dispatch = useDispatch();
     return (
