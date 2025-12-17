@@ -14,7 +14,7 @@ import { useParams } from "react-router";
 const Products = () => {
 
   const { slug } = useParams();
-  const { records } = useGetProducts();
+  const { fullyProduct } = useGetProducts();
 
   const [sortOrder, setSortOrder] = useState('');
   const [page, setPage] = useState(1);
@@ -27,15 +27,15 @@ const Products = () => {
 
   const handleSort = () => {
     if (sortOrder === 'Newest') {
-      return records.sort((a, b) => b.title.localeCompare(a.title));
+      return fullyProduct.sort((a, b) => b.title.localeCompare(a.title));
     } else if (sortOrder === 'Price: Low to High') {
-      return records.sort((a, b) => a.price - b.price);
+      return fullyProduct.sort((a, b) => a.price - b.price);
     } else if (sortOrder === 'Price: High to Low') {
-      return records.sort((a, b) => b.price - a.price);
+      return fullyProduct.sort((a, b) => b.price - a.price);
     } else if (sortOrder === 'Best Selling') {
-      return records.sort((a, b) => b.price - a.price);
+      return fullyProduct.sort((a, b) => b.price - a.price);
     }
-    return records;
+    return fullyProduct;
   };
 
   return (
@@ -69,7 +69,7 @@ const Products = () => {
       <Box sx={{ width: { xs: '100%', md: '65%' } }} >
         <Stack direction="row" justifyContent="space-between" alignItems={'center'} sx={{ display: { md: 'flex', xs: 'block' } }} mb={1}>
           <Typography ml={3} variant="body2" fontWeight={'500'} color={"#6B7280"}>
-            {records.length * 6}+ Products Available
+            {fullyProduct.length * 6}+ Products Available
           </Typography>
           <Typography variant="body2" color={"#6B7280"} sx={{
             display: 'flex',
@@ -99,13 +99,13 @@ const Products = () => {
           gap: 2
         }}>
           {
-            records.length > 0 ? records.slice(page * 6 - 6, page * 6).map((product) => (
+            fullyProduct.length > 0 ? fullyProduct.slice(page * 6 - 6, page * 6).map((product) => (
               <Product key={product.id} product={product} />
             )) : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', textAlign: 'center', fontSize: "28px" }}>Loading...</Box>
           }
         </Stack>
         {
-          records.length > 0 && <Pagination size={"large"} color="primary" page={page} onChange={(_, value) => setPage(value)} variant="outlined" count={(Math.floor(records.length / 6))} shape="rounded" sx={{ my: 3, display: 'flex', justifyContent: 'center', }} />
+          fullyProduct.length > 0 && <Pagination size={"large"} color="primary" page={page} onChange={(_, value) => setPage(value)} variant="outlined" count={(Math.floor(fullyProduct.length / 6))} shape="rounded" sx={{ my: 3, display: 'flex', justifyContent: 'center', }} />
         }
       </Box>
     </Box>

@@ -5,11 +5,20 @@ import getProductbyCategories from "../store/produts/thunk/getProductbyCategorie
 import { useParams } from "react-router"
 import { productClenUp } from "../store/produts/productSlice"
 import getSingleProduct from "../store/produts/thunk/getSingleProduct"
+import type { TProduct } from "../types/product"
 
 export const useGetProducts = () => {
     const { slug, id } = useParams()
     const dispatch = useAppDispatch()
     const { records, record, loading, error } = useAppSelector((state) => state.products)
+
+     const fullyProduct = records.map((item: TProduct) => {
+            return {
+                ...item,
+                quantity: item.quantity,
+                isLiked: records.some(w => w.id === item.id)
+            }
+        })
 
     useEffect(() => {
         if (slug) {
@@ -26,5 +35,5 @@ export const useGetProducts = () => {
 
     }, [dispatch, slug, id])
 
-    return { records, record, loading, error }
+    return { fullyProduct, record, loading, error }
 }

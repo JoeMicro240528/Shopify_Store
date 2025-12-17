@@ -17,7 +17,6 @@ export default function Tabscontent() {
         aria-label="Tabs where selection follows focus"
         selectionFollowsFocus
 
-
       >
         <Tab sx={{ textTransform: "none", fontSize: "12px" }} label="Description" />
         <Tab sx={{ textTransform: "none", fontSize: "12px" }} label="Reviews (121)" />

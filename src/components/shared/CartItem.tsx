@@ -3,9 +3,13 @@ import type { TProduct } from "../../types/product";
 import NumberSpinner from './NumberSpinner';
 import { DeleteOutline } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { removeFromCart } from "../../store/cart/cartSlice";
+import { changeQuantity, removeFromCart } from "../../store/cart/cartSlice";
 const CartItem = ({ item }: { item: TProduct }) => {
     const dispatch = useDispatch();
+
+    const handelChangeQuantatiy = (value: number) => {
+        dispatch(changeQuantity({ id: item.id, quantity: value }))
+    }
     return (
         <Box ml={2} sx={{ width: { xs: '100%', md: '100%' } }}>
             <Stack width={"100%"} sx={{ flexDirection: { xs: 'column', md: 'row' } }} justifyContent={"space-between"} alignItems={'center'} borderRadius={3} bgcolor={'#FFFFFF'} mb={2} boxShadow={'0px 4px 12px rgba(0, 0, 0, 0.05)'} >
@@ -36,7 +40,7 @@ const CartItem = ({ item }: { item: TProduct }) => {
                             size="small"
                             defaultValue={item.quantity}
                             value={item.quantity}
-                            //onChange={(value: number) => dispatch(changeQuantity({ id: item.id, quantity: value }))}
+                            onChange={(value) => handelChangeQuantatiy(value ?? 1)}
                             error={false}
 
                         />

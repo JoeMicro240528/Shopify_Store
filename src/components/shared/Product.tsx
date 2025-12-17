@@ -50,7 +50,7 @@ const Product = ({ product }: { product: TProduct }) => {
                                 padding: '7px',
                                 bgcolor: product.isLiked ? 'error.main' : 'inherit',
                                 transition: 'all 0.5s',
-                                color: '#000',
+                                color: product.isLiked ? '#FFFFFF' : '#000',
                                 '&:hover': {
                                     bgcolor: 'error.main',
                                     color: '#fff'

@@ -10,7 +10,7 @@ import type { TCategory } from "../types/category"
 
 const Home = () => {
   const { categories } = useGetCategories();
-  const { records } = useGetProducts();
+  const { fullyProduct } = useGetProducts();
 
   return (
     <>
@@ -60,8 +60,8 @@ const Home = () => {
             gap: 5
           }}>
             {
-              records?.length > 0 ?
-                records.slice(0, 8).map((product: TProduct) => <Product product={product} key={product.id} />) :
+              fullyProduct?.length > 0 ?
+                fullyProduct.slice(0, 8).map((product: TProduct) => <Product product={product} key={product.id} />) :
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', textAlign: 'center', fontSize: "28px" }}>Loading...</Box>
             }
           </Stack>
