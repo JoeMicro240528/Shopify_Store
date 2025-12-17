@@ -2,9 +2,16 @@ import { Box, Button, Container, Stack, Typography } from "@mui/material"
 import Overlay from "../components/shared/Overlay"
 import Product from "../components/shared/Product"
 import CategoryProduct from "../components/shared/CategoryProduct"
+import { useGetCategories } from "../hooks/useGetCategories"
+import { useGetProducts } from "../hooks/useGetProducts"
+import type { TProduct } from "../types/product"
+import type { TCategory } from "../types/category"
 
 
 const Home = () => {
+  const { categories } = useGetCategories();
+  const { records, loading, error } = useGetProducts();
+
   return (
     <>
       <Container sx={{ mt: 7 }} >
@@ -49,13 +56,14 @@ const Home = () => {
           </Typography>
           <Stack sx={{
             display: 'grid',
-            gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))',
-            gap:5
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gap: 5
           }}>
-            <Product />
-            <Product />
-            <Product />
-            <Product />
+            {
+              records?.length > 0 ?
+                records.slice(0, 8).map((product: TProduct) => <Product product={product} key={product.id} />) :
+                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', textAlign: 'center', fontSize: "28px" }}>Loading...</Box>
+            }
           </Stack>
         </Box>
 
@@ -90,7 +98,7 @@ const Home = () => {
           </Stack>
         </Box>
 
-             {/*   Shop by Category section */}
+        {/*   Shop by Category section */}
 
         <Box>
           <Typography variant="h4" fontWeight={'bold'} my={5} sx={{}}>
@@ -98,18 +106,20 @@ const Home = () => {
           </Typography>
 
           <Stack sx={{
-              display: 'grid',
-               gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))',
-               gap: 4
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gap: 4
           }}>
-               <CategoryProduct/>
-                <CategoryProduct/>
-                 <CategoryProduct/>
-                  <CategoryProduct/>
+            {
+              categories.length > 0 ? categories.slice(0, 5).map((category: TCategory) => (
+                <CategoryProduct key={category.id} category={category} />
+              )) : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', textAlign: 'center', fontSize: "28px" }}>Loading...</Box>
+
+            }
           </Stack>
         </Box>
       </Container>
-      
+
     </>
   )
 }

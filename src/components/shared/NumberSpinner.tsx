@@ -14,11 +14,13 @@ export default function NumberSpinner({
   label,
   error,
   size = 'medium',
+  onChange,
   ...other
 }: BaseNumberField.Root.Props & {
   label?: React.ReactNode;
   size?: 'small' | 'medium';
   error?: boolean;
+  onChange?: (value: number | null, event?: any) => void;
 }) {
   let id = React.useId();
   if (idProp) {
@@ -26,6 +28,7 @@ export default function NumberSpinner({
   }
   return (
     <BaseNumberField.Root
+      onValueChange={onChange}
       {...other}
       render={(props, state) => (
         <FormControl

@@ -4,57 +4,80 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box, CardMedia } from '@mui/material';
-import { AddShoppingCart } from '@mui/icons-material';
+import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
+import type { TProduct } from '../../types/product';
+import { useNavigate } from "react-router"
+import { addToCart } from '../../store/cart/cartSlice';
+import { useAppDispatch } from '../../store/hooks';
+import { addToWishlist } from '../../store/wishlist/wishlistSlice';
 
+const Product = ({ product }: { product: TProduct }) => {
 
-const Product = () => {
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     return (
         <>
-            <Card  variant='outlined' sx={{
-                    bgcolor:'inherit',
-                    border:'none',
-                    cursor:'pointer'
-                }}>
+            <Card variant='outlined' sx={{
+                bgcolor: 'inherit',
+                border: 'none',
+                cursor: 'pointer'
+            }}>
                 <CardContent>
-                 <Box   borderRadius={5} sx={
-                    {
-                        background:"#F7F8F7",
-                        overflow:'hidden'
-                    }
-                 }>
-                     <CardMedia
-                      sx={{
-                           transition:'all 0.3s ease-in-out',
-                        '&:hover':{
-                          transform:'scale(1.1)'
+                    <Box onClick={() => navigate(`/products/${product.id}`)} borderRadius={5} sx={
+                        {
+                            background: "#F7F8F7",
+                            overflow: 'hidden'
                         }
-                      }}
-                        component="img"
-                        height="350"
-                        image="https://lh3.googleusercontent.com/aida-public/AB6AXuC8PA7brbI9KmO11G3yQ7P4HnG7i2lrPjmyTT1WYhmBfn79Ids4jnumZubygFyjAqFFGhpRMiKBZTMvq4VMy82_8GkCA3cumJrtPeOmSe_4oCJqAXVJQQYy6K_3EhKHuyc7FWef-sgXyqzXIcHGkSj_dMsrhsgSJut7MvEZNMuH_xYVbNaOeXzrmuGsb9NZztnc0imfZtL7G1fSCqhRnQAqKB9GnC1OwdEfFMDML9GQFgNuwD6gSjYWVCVjNe3U_GWJrZ8SUXOWfT8"
-                        alt="Paella dish"
-                    />
-                     <CardActions sx={{display:'flex', justifyContent: 'flex-end'}}>
-                     <Button  size="small"sx={{
-                        borderRadius:'10%',
-                        padding:'7px',
-                        bgcolor:'#fff',
-                        transition:'all 0.5s',
-                        color:'#000',
-                        '&:hover':{
-                           bgcolor:'primary.main',
-                           color:'#fff'
-                        }
-                        
-                     }}><AddShoppingCart /></Button>
-                  </CardActions>
-                 </Box>
-                    <Typography variant="h6" component="div">
-                        Classic White Tee
+                    }>
+                        <CardMedia
+                            sx={{
+                                transition: 'all 0.3s ease-in-out',
+                                marginBottom: '10px',
+                                '&:hover': {
+                                    transform: 'scale(1.1)'
+                                }
+                            }}
+                            component="img"
+                            height="350"
+                            image={product.images[0]}
+                            alt="Paella dish"
+                        />
+                    </Box>
+                    <Box>
+                        <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Button size="small" sx={{
+                                borderRadius: '10%',
+                                padding: '7px',
+                                bgcolor: product.isLiked ? 'error.main' : 'inherit',
+                                transition: 'all 0.5s',
+                                color: '#000',
+                                '&:hover': {
+                                    bgcolor: 'error.main',
+                                    color: '#fff'
+                                }
+
+                            }} onClick={() => dispatch(addToWishlist(product))}><FavoriteBorder /></Button>
+                            <Button size="small" sx={{
+                                borderRadius: '10%',
+                                padding: '7px',
+                                bgcolor: 'inherit',
+                                transition: 'all 0.5s',
+                                color: '#000',
+                                '&:hover': {
+                                    bgcolor: 'primary.main',
+                                    color: '#fff'
+                                }
+
+                            }} onClick={() => dispatch(addToCart(product))}><AddShoppingCart /></Button>
+
+                        </CardActions>
+                    </Box>
+                    <Typography variant="body1" component="div">
+                        {product.title}
                     </Typography>
-                    <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>$35.00</Typography>
+                    <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>${product.price}</Typography>
                 </CardContent>
-               
+
             </Card>
         </>
     )

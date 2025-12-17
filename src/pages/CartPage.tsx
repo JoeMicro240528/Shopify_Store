@@ -1,10 +1,13 @@
 import { Box, Button, Container, Stack, TextField, Typography } from "@mui/material"
-
 import Breadcrumb from "../components/shared/Breadcrumb"
 import CartItem from "../components/shared/CartItem"
 import { LockPerson } from "@mui/icons-material"
+import { Link } from "react-router"
+import { useCartPage } from "../hooks/useCartPage"
 
 const CartPage = () => {
+
+  const { fullyProduct, navigate } = useCartPage()
 
   return (
     <>
@@ -17,7 +20,7 @@ const CartPage = () => {
             My Bag
           </Typography>
           <Typography sx={{ width: '90%', mt: 1 }} variant="body1" color={"#6B7280"} >
-            You have 2 items in your cart.<Button sx={{ "textTransform": "none", fontSize: "16px", fontWeight: '550', '&:hover': { textDecoration: 'underline' } }}>Continue Shopping</Button>
+            You have {fullyProduct.length} items in your cart.<Button onClick={() => navigate("/all products")} sx={{ "textTransform": "none", fontSize: "16px", fontWeight: '550', '&:hover': { textDecoration: 'underline' } }}>Continue Shopping</Button>
           </Typography>
         </Box>
         <Box mt={2} sx={{
@@ -30,11 +33,14 @@ const CartPage = () => {
             display: 'flex',
             flexDirection: 'column',
           }}>
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-
+            {
+              fullyProduct.length > 0 ? fullyProduct.map(item => (
+                <CartItem key={item.id} item={item} />
+              )) : <Stack sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '50vh', gap: 2 }}>
+                <Typography variant="h5" color="text.secondary">Your wishlist is empty</Typography>
+                <Link to="/all products" style={{ color: "#1976D2" }}>Browse Products</Link>
+              </Stack>
+            }
           </Box>
 
           <Box sx={{ m: { xs: "30px auto", md: '0 auto auto auto' }, ml: { xs: "auto", md: 5 }, width: { xs: '80%', md: '35%', }, bgcolor: "#FFF", borderRadius: 3, p: 4, height: 'auto' }}>
@@ -44,19 +50,19 @@ const CartPage = () => {
             <Box width={'100%'}>
               <Stack direction={'row'} justifyContent={'space-between'} p={1} mb={1}>
                 <Typography color="#6b7280" variant='body1'>Subtotal</Typography>
-                <Typography variant='body1'>	$85.00</Typography>
+                <Typography variant='body1'>	${fullyProduct.reduce((acc, item) => acc + item.price * (item.quantity ?? 1), 0)}</Typography>
               </Stack>
               <Stack direction={'row'} justifyContent={'space-between'} p={1} mb={1}>
                 <Typography color="#6b7280" variant='body1'>Shipping</Typography>
-                <Typography variant='body1'>$5.00</Typography>
+                <Typography variant='body1'>$20</Typography>
               </Stack>
               <Stack direction={'row'} justifyContent={'space-between'} p={1} pb={2} borderBottom={"1px solid #e4e4e4"}>
                 <Typography color="#6b7280" variant='body1'>Taxes</Typography>
-                <Typography variant='body1'>$7.25</Typography>
+                <Typography variant='body1'>$15</Typography>
               </Stack>
               <Stack direction={'row'} justifyContent={'space-between'} p={1} my={1}>
                 <Typography variant='h6' fontWeight={'600'}>Order Total</Typography>
-                <Typography variant='h6' fontWeight={'600'}>$97.25</Typography>
+                <Typography variant='h6' fontWeight={'600'}>${fullyProduct.reduce((acc, item) => acc + item.price * (item.quantity ?? 1), 0) + 20 + 15}</Typography>
               </Stack>
               <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={2} p={1} my={1}>
                 <TextField id="outlined-basic" placeholder="Enter promo code" variant="outlined" />

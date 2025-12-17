@@ -7,19 +7,40 @@ import { useState } from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { useGetProducts } from '../hooks/useGetProducts'
+import { useParams } from "react-router";
+
 
 const Products = () => {
 
-    const [sortOrder, setSortOrder] = useState('');
+  const { slug } = useParams();
+  const { records, loading, error } = useGetProducts();
+
+  const [sortOrder, setSortOrder] = useState('');
+  const [page, setPage] = useState(1);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSortOrder(event.target.value);
   };
 
 
+
+  const handleSort = () => {
+    if (sortOrder === 'Newest') {
+      return records.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (sortOrder === 'Price: Low to High') {
+      return records.sort((a, b) => a.price - b.price);
+    } else if (sortOrder === 'Price: High to Low') {
+      return records.sort((a, b) => b.price - a.price);
+    } else if (sortOrder === 'Best Selling') {
+      return records.sort((a, b) => b.price - a.price);
+    }
+    return records;
+  };
+
   return (
     <Box mt={5} sx={{
-      display: { md: 'flex' , xs: 'block' },
+      display: { md: 'flex', xs: 'block' },
       gap: 5,
       height: 'auto'
     }}>
@@ -27,9 +48,9 @@ const Products = () => {
       <Box ml={2} sx={{ width: { xs: '100%', md: '35%' } }}>
         <Breadcrumb prev={["Home"]} accuml="Products" />
         <Typography variant="h4" fontWeight={'900'} my={2} sx={{ letterSpacing: '0 !important' }}>
-          Men's Shoes
+          {slug ? slug + ' products' : 'all Products'}
         </Typography>
-        <Typography sx={{ width: '90%'}} variant="body1" color={"#6B7280"} >
+        <Typography sx={{ width: '90%' }} variant="body1" color={"#6B7280"} >
           <Divider orientation="horizontal" flexItem />
         </Typography>
         <Box my={2} sx={{ width: '90%' }}>
@@ -45,19 +66,19 @@ const Products = () => {
         </Box>
       </Box>
 
-      <Box sx={{ width: { xs: '100%', md: '65%' }}} >
-        <Stack direction="row" justifyContent="space-between" alignItems={'center'} sx={{display:{md:'flex', xs:'block'}}} mb={1}>
+      <Box sx={{ width: { xs: '100%', md: '65%' } }} >
+        <Stack direction="row" justifyContent="space-between" alignItems={'center'} sx={{ display: { md: 'flex', xs: 'block' } }} mb={1}>
           <Typography ml={3} variant="body2" fontWeight={'500'} color={"#6B7280"}>
-            2000+ Products Available
+            {records.length * 6}+ Products Available
           </Typography>
           <Typography variant="body2" color={"#6B7280"} sx={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
           }} >
-            Sort by:   <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            Sort by:   <FormControl component={'form'} onSelect={handleSort} sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="demo-select-small-label">Sort by</InputLabel>
-              <Select 
+              <Select
                 labelId="demo-select-small-label"
                 id="demo-select-small"
                 value={sortOrder}
@@ -66,7 +87,7 @@ const Products = () => {
               >
                 <MenuItem value={'Newest'}>Newest</MenuItem>
                 <MenuItem value={'Price: Low to High'}>Price: Low to High</MenuItem>
-                 <MenuItem value={'Price: High to Low'}>Price: High to Low</MenuItem>
+                <MenuItem value={'Price: High to Low'}>Price: High to Low</MenuItem>
                 <MenuItem value={'Best Selling'}>Best Selling</MenuItem>
               </Select>
             </FormControl>
@@ -77,14 +98,15 @@ const Products = () => {
           gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
           gap: 2
         }}>
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
+          {
+            records.length > 0 ? records.slice(page * 6 - 6, page * 6).map((product) => (
+              <Product key={product.id} product={product} />
+            )) : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', textAlign: 'center', fontSize: "28px" }}>Loading...</Box>
+          }
         </Stack>
-        <Pagination size={"large"} color="primary" variant="outlined" count={10} shape="rounded" sx={{ my: 3, display: 'flex', justifyContent: 'center', }} />
+        {
+          records.length > 0 && <Pagination size={"large"} color="primary" page={page} onChange={(e, value) => setPage(value)} variant="outlined" count={(Math.floor(records.length / 6))} shape="rounded" sx={{ my: 3, display: 'flex', justifyContent: 'center', }} />
+        }
       </Box>
     </Box>
   )
