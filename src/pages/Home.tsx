@@ -10,7 +10,7 @@ import type { TCategory } from "../types/category"
 
 const Home = () => {
   const { categories } = useGetCategories();
-  const { records, loading, error } = useGetProducts();
+  const { records } = useGetProducts();
 
   return (
     <>

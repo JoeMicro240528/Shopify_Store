@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 export default function Tabscontent() {
   const [value, setValue] = React.useState(0);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -16,12 +16,12 @@ export default function Tabscontent() {
         value={value}
         aria-label="Tabs where selection follows focus"
         selectionFollowsFocus
-       
-        
+
+
       >
-        <Tab  sx={{textTransform:"none",fontSize:"12px"}} label="Description" />
-        <Tab  sx={{textTransform:"none",fontSize:"12px"}} label="Reviews (121)" />
-        <Tab  sx={{textTransform:"none",fontSize:"12px"}} label="Q&A (14)" />
+        <Tab sx={{ textTransform: "none", fontSize: "12px" }} label="Description" />
+        <Tab sx={{ textTransform: "none", fontSize: "12px" }} label="Reviews (121)" />
+        <Tab sx={{ textTransform: "none", fontSize: "12px" }} label="Q&A (14)" />
       </Tabs>
     </Box>
   );

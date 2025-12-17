@@ -36,7 +36,7 @@ const CartItem = ({ item }: { item: TProduct }) => {
                             size="small"
                             defaultValue={item.quantity}
                             value={item.quantity}
-                            onChange={(value: number) => dispatch(changeQuantity({ id: item.id, quantity: value }))}
+                            //onChange={(value: number) => dispatch(changeQuantity({ id: item.id, quantity: value }))}
                             error={false}
 
                         />

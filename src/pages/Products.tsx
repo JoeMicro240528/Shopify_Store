@@ -14,7 +14,7 @@ import { useParams } from "react-router";
 const Products = () => {
 
   const { slug } = useParams();
-  const { records, loading, error } = useGetProducts();
+  const { records } = useGetProducts();
 
   const [sortOrder, setSortOrder] = useState('');
   const [page, setPage] = useState(1);
@@ -105,7 +105,7 @@ const Products = () => {
           }
         </Stack>
         {
-          records.length > 0 && <Pagination size={"large"} color="primary" page={page} onChange={(e, value) => setPage(value)} variant="outlined" count={(Math.floor(records.length / 6))} shape="rounded" sx={{ my: 3, display: 'flex', justifyContent: 'center', }} />
+          records.length > 0 && <Pagination size={"large"} color="primary" page={page} onChange={(_, value) => setPage(value)} variant="outlined" count={(Math.floor(records.length / 6))} shape="rounded" sx={{ my: 3, display: 'flex', justifyContent: 'center', }} />
         }
       </Box>
     </Box>

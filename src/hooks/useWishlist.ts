@@ -6,12 +6,11 @@ import type { TProduct } from "../types/product"
 export const useWishlist = () => {
     const { items } = useAppSelector(state => state.wishlist)
     const dispatch = useAppDispatch()
-    const wishlist = useAppSelector(state => state.wishlist.items)
     const fullyProduct = items.map((item: TProduct) => {
         return {
             ...item,
             quantity: item.quantity,
-            isLiked: wishlist.includes(item.id)
+            isLiked: items.some(w => w.id === item.id)
         }
     })
 
