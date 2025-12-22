@@ -1,19 +1,19 @@
 import { ArrowBack, CheckCircleOutline, Refresh, Storefront } from "@mui/icons-material"
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material"
-import { Link,useRouteError,isRouteErrorResponse } from "react-router"
-
+import { Link, useRouteError, isRouteErrorResponse } from "react-router"
+import LottieHandeller from "../components/shared/LottieHandeller"
 const ErrorPage = () => {
   const error = useRouteError();
 
-  let errorStatus:number;
-  let errorText:string;
+  let errorStatus: number;
+  let errorText: string;
 
-  if(isRouteErrorResponse(error)){
-      errorStatus=error.status;
-      errorText=error.statusText
-  }else{
-      errorStatus=404;
-      errorText='Page Not Found';
+  if (isRouteErrorResponse(error)) {
+    errorStatus = error.status;
+    errorText = error.statusText
+  } else {
+    errorStatus = 404;
+    errorText = 'Page Not Found';
   }
   return (
     <>
@@ -49,7 +49,7 @@ const ErrorPage = () => {
 
         <Box my={10} textAlign={'center'} >
           <Box width={'250px'} m={'0 auto'}>
-            <img width={'100%'} src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4GfBmM4IpCWM6UuPRg66XeTQyRgOTylZjnQwbyP1YEa1Y4Nq2gPToHwNALaTsiMJgW_Cej0FtkYtErmpfS5HuPYA6M8v8JiZ6jR_bWgyYYVToaA3Dppvuw7hkFbgS9Oo-GMj_EtskEeig1I9mRGadLw92_9GwbLWj1olWSo8Pz1fAB3Zk9jQxCC6VCuWGXIil9axpzkW79x4XIZBOu13lA_faNB1Rn0BTyt60jLAcU02w4VcOEN3C5IRUM2-t6uqIAThUu-bYgj8" alt="" />
+            <LottieHandeller type="notFound" />
           </Box>
           <Stack width={'40%'} m={'0 auto'} textAlign={'center'}>
             <Typography variant="h5" fontWeight={'900'}>
@@ -67,7 +67,7 @@ const ErrorPage = () => {
             gap: 2
           }}>
             <Button variant="contained" sx={{ width: '200px', color: "#FFF", borderRadius: 2 }}>
-             <Link replace={true } style={{textDecoration:'none',color:'inherit'}} to='/'>Go to home page</Link>
+              <Link replace={true} style={{ textDecoration: 'none', color: 'inherit' }} to='/'>Go to home page</Link>
             </Button>
             <Button variant="contained" sx={{ background: "#CBD5E1", color: "#333", width: '200px', borderRadius: 2 }}>
               Contact Support
@@ -95,7 +95,7 @@ const ErrorPage = () => {
             </Stack>
           </Box>
           <Typography color="#94a3b8" variant="body2">Error Text: {errorText}</Typography>
-           <Typography color="#94a3b8" variant="body2">Error Code: {errorStatus}</Typography>
+          <Typography color="#94a3b8" variant="body2">Error Code: {errorStatus}</Typography>
         </Box>
       </Container>
     </>

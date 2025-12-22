@@ -1,12 +1,17 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { TProduct } from "../../types/product";
+import type { Tloading } from "../../types/shared";
 
 interface IWishlistState {
     items: TProduct[];
+    loading: Tloading,
+    error: string | null
 }
 
 const initialState: IWishlistState = {
     items: [],
+    loading: "idle",
+    error: null
 };
 
 const wishlistSlice = createSlice({

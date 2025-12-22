@@ -7,7 +7,7 @@ export const useCartPage = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { items } = useAppSelector(state => state.cart)
+    const { items, loading, error } = useAppSelector(state => state.cart)
 
 
     const fullyProduct = items.map((item: TProduct) => {
@@ -19,5 +19,5 @@ export const useCartPage = () => {
 
 
 
-    return { fullyProduct, items, dispatch, navigate }
+    return { fullyProduct, loading, error, items, dispatch, navigate }
 }

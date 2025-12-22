@@ -9,19 +9,21 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { useGetProducts } from '../hooks/useGetProducts'
 import { useParams } from "react-router";
-
+import ProductSkeleton from "../components/shared/ProductSkeleton";
 
 const Products = () => {
 
   const { slug } = useParams();
   const { fullyProduct } = useGetProducts();
 
+  const fackArray = Array.from({ length: 6 }, (_, index) => index + 1);
   const [sortOrder, setSortOrder] = useState('');
   const [page, setPage] = useState(1);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSortOrder(event.target.value);
   };
+
 
 
 
@@ -37,6 +39,8 @@ const Products = () => {
     }
     return fullyProduct;
   };
+
+
 
   return (
     <Box mt={5} sx={{
@@ -101,7 +105,7 @@ const Products = () => {
           {
             fullyProduct.length > 0 ? fullyProduct.slice(page * 6 - 6, page * 6).map((product) => (
               <Product key={product.id} product={product} />
-            )) : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', textAlign: 'center', fontSize: "28px" }}>Loading...</Box>
+            )) : fackArray.map((item) => <ProductSkeleton key={item} />)
           }
         </Stack>
         {

@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '../../src/store/hooks';
 import { addToCart } from '../store/cart/cartSlice';
 import { addToWishlist } from '../store/wishlist/wishlistSlice';
+import LottieHandeller from "../components/shared/LottieHandeller"
 const ProductInfo = () => {
 
   const dispatch = useAppDispatch()
@@ -17,15 +18,18 @@ const ProductInfo = () => {
 
   const [imageIndex, setImageIndex] = useState(0);
 
+
+
   if (loading === 'pending' || loading === 'idle') {
-    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>Loading...</Box>
+    return <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="loading" /></Box>
   }
   if (error) {
-    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>{error}</Box>
+    return <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="notFound" /></Box>
   }
 
+
   if (!record) {
-    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>Product not found</Box>
+    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="notFound" />  </Box>
   }
 
   return (
@@ -41,7 +45,7 @@ const ProductInfo = () => {
           <Box my={4} display={'flex'} sx={{ flexDirection: { md: 'row', xs: 'column' } }} gap={2}>
             <Stack gap={1} sx={{ flexDirection: { md: 'column', xs: 'row' } }}>
               {
-                record.images.map((image, index) => (
+                record.images.map((image: string, index: number) => (
                   <Box key={index} onClick={() => setImageIndex(index)} width={"4rem"} overflow={'hidden'} height={"4rem"}
 
                     sx={{

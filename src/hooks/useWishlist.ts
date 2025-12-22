@@ -4,7 +4,7 @@ import { useAppDispatch } from "../store/hooks"
 import type { TProduct } from "../types/product"
 
 export const useWishlist = () => {
-    const { items } = useAppSelector(state => state.wishlist)
+    const { items, error, loading } = useAppSelector(state => state.wishlist)
     const dispatch = useAppDispatch()
     const fullyProduct = items.map((item: TProduct) => {
         return {
@@ -15,5 +15,5 @@ export const useWishlist = () => {
     })
 
 
-    return { fullyProduct, items, dispatch }
+    return { fullyProduct, error, loading, items, dispatch }
 }

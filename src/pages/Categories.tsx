@@ -2,16 +2,28 @@ import { Box, Container, Stack, Typography } from "@mui/material"
 import CategoryProduct from "../components/shared/CategoryProduct"
 import Breadcrumb from "../components/shared/Breadcrumb"
 import { useGetCategories } from '../hooks/useGetCategories'
-
+import LottieHandeller from "../components/shared/LottieHandeller"
+import CategorySkeleton from "../components/shared/CategorySkeleton"
 
 const Categories = () => {
 
-  const { categories } = useGetCategories()
+  const { categories, error, loading } = useGetCategories()
 
 
   const categoriesList = categories.length > 0 ? categories.slice(0, 5).map((category) => (
     <CategoryProduct key={category.id} category={category} />
-  )) : <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>Loading...</Box>
+  )) : <CategorySkeleton />
+
+
+
+  if (loading === 'pending' || loading === 'idle') {
+    return <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="loading" /></Box>
+  }
+  if (error) {
+    return <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="error" /></Box>
+  }
+
+
 
   return (
     <>

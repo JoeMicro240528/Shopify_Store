@@ -5,11 +5,31 @@ import { Link as RouterLink } from 'react-router'
 import { clearWishlist } from "../store/wishlist/wishlistSlice"
 import { useAppDispatch } from '../store/hooks'
 import { useWishlist } from "../hooks/useWishlist"
-
+import LottieHandeller from "../components/shared/LottieHandeller"
+import { useEffect, useState } from "react"
 const WishlistPage = () => {
     const dispatch = useAppDispatch()
-    const { fullyProduct, items } = useWishlist()
-    console.log(fullyProduct, items);
+    const { fullyProduct, error, items } = useWishlist()
+
+    const [loading, setLoading] = useState('pending')
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading('success')
+        }, 2000)
+
+
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [0])
+
+    if (loading === 'pending' || loading === 'idle') {
+        return <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="loading" /></Box>
+    }
+    if (error) {
+        return <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="error" /></Box>
+    }
 
 
 
@@ -36,6 +56,9 @@ const WishlistPage = () => {
                     </Stack>
                 ) : (
                     <Stack sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '50vh', gap: 2 }}>
+                        <Box mt={10}>
+                            <LottieHandeller type="empty" />
+                        </Box>
                         <Typography variant="h5" color="text.secondary">Your wishlist is empty</Typography>
                         <Link component={RouterLink} to="/all products" underline="hover">Browse Products</Link>
                     </Stack>

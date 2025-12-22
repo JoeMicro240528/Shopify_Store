@@ -6,12 +6,12 @@ import { useGetCategories } from "../hooks/useGetCategories"
 import { useGetProducts } from "../hooks/useGetProducts"
 import type { TProduct } from "../types/product"
 import type { TCategory } from "../types/category"
-
-
+import CategorySkeleton from "../components/shared/CategorySkeleton"
+import ProductSkeleton from "../components/shared/ProductSkeleton"
 const Home = () => {
   const { categories } = useGetCategories();
   const { fullyProduct } = useGetProducts();
-
+  const fackArray = Array.from({ length: 8 }, (_, index) => index + 1);
   return (
     <>
       <Container sx={{ mt: 7 }} >
@@ -50,7 +50,7 @@ const Home = () => {
 
         {/* Trending Now section */}
 
-        <Box mt={15}>
+        <Box mt={15} mb={5}>
           <Typography variant="h4" fontWeight={'bold'} mb={5} sx={{}}>
             Trending Now
           </Typography>
@@ -62,7 +62,7 @@ const Home = () => {
             {
               fullyProduct?.length > 0 ?
                 fullyProduct.slice(0, 8).map((product: TProduct) => <Product product={product} key={product.id} />) :
-                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', textAlign: 'center', fontSize: "28px" }}>Loading...</Box>
+                fackArray.map((item) => <ProductSkeleton key={item} />)
             }
           </Stack>
         </Box>
@@ -113,7 +113,7 @@ const Home = () => {
             {
               categories.length > 0 ? categories.slice(0, 5).map((category: TCategory) => (
                 <CategoryProduct key={category.id} category={category} />
-              )) : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', textAlign: 'center', fontSize: "28px" }}>Loading...</Box>
+              )) : <CategorySkeleton />
 
             }
           </Stack>
