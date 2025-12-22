@@ -15,19 +15,20 @@ const WishlistPage = lazy(() => import('../pages/WishlistPage'));
 
 //applay lazy loading
 import { Suspense } from 'react'
+import LottieHandeller from "../components/shared/LottieHandeller";
 const AppRoot = () => {
 
   const router = createBrowserRouter([
 
     {
       path: "/", element: <MainLayouts />, errorElement: <ErrorPage />, children: [
-        { index: true, element: <Suspense fallback={<div>Loading...</div>}><Home /></Suspense> },
-        { path: 'home', element: <Suspense fallback={<div>Loading...</div>}><Home /></Suspense> },
+        { index: true, element: <Suspense fallback={<LottieHandeller type="loading" />}><Home /></Suspense> },
+        { path: 'home', element: <Suspense fallback={<LottieHandeller type="loading" />}><Home /></Suspense> },
         {
-          path: 'categories', element: <Suspense fallback={<div>Loading...</div>}><Categories /></Suspense>
+          path: 'categories', element: <Suspense fallback={<LottieHandeller type="loading" />}><Categories /></Suspense>
         },
-        { path: 'all products', element: <Suspense fallback={<div>Loading...</div>}><Products /></Suspense> },
-        { path: 'wishlist', element: <Suspense fallback={<div>Loading...</div>}><WishlistPage /></Suspense> },
+        { path: 'all products', element: <Suspense fallback={<LottieHandeller type="loading" />}><Products /></Suspense> },
+        { path: 'wishlist', element: <Suspense fallback={<LottieHandeller type="loading" />}><WishlistPage /></Suspense> },
         {
           path: 'category/product/:slug', element: <Products />,
           loader: ({ params }) => {
@@ -42,7 +43,7 @@ const AppRoot = () => {
           }
         },
         {
-          path: 'products/:id', element: <Suspense fallback={<div>Loading...</div>}><ProductInfo /></Suspense>,
+          path: 'products/:id', element: <Suspense fallback={<LottieHandeller type="loading" />}><ProductInfo /></Suspense>,
           loader: ({ params }) => {
             if (typeof (params.id) !== "number" && typeof (params.id) !== "string") {
               throw new Response('Bad Request', {
@@ -54,8 +55,8 @@ const AppRoot = () => {
             return true;
           }
         },
-        { path: 'cart', element: <Suspense fallback={<div>Loading...</div>}><CartPage /></Suspense> },
-        { path: 'profile', element: <Suspense fallback={<div>Loading...</div>}><ProfilePage /></Suspense> },
+        { path: 'cart', element: <Suspense fallback={<LottieHandeller type="loading" />}><CartPage /></Suspense> },
+        { path: 'profile', element: <Suspense fallback={<LottieHandeller type="loading" />}><ProfilePage /></Suspense> },
       ]
     },
 
