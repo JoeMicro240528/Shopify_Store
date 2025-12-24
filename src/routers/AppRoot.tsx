@@ -1,10 +1,13 @@
 import ErrorPage from "../pages/ErrorPage"
 import '../styles/globalStyle.css'
-// import RegisterPage from "../pages/RegisterPage"
-// import LoginPage from "../pages/LoginPage"
+import RegisterPage from "../pages/RegisterPage"
+import LoginPage from "../pages/LoginPage"
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import MainLayouts from "../layouts/MainLayouts"
 import { lazy } from 'react'
+import { Suspense } from 'react'
+import LottieHandeller from "../components/shared/LottieHandeller";
+
 const Home = lazy(() => import('../pages/Home'));
 const Categories = lazy(() => import('../pages/Categories'));
 const Products = lazy(() => import('../pages/Products'));
@@ -12,10 +15,6 @@ const ProductInfo = lazy(() => import('../pages/ProductInfo'));
 const CartPage = lazy(() => import('../pages/CartPage'));
 const ProfilePage = lazy(() => import('../pages/ProfilePage'));
 const WishlistPage = lazy(() => import('../pages/WishlistPage'));
-
-//applay lazy loading
-import { Suspense } from 'react'
-import LottieHandeller from "../components/shared/LottieHandeller";
 const AppRoot = () => {
 
   const router = createBrowserRouter([
@@ -57,6 +56,8 @@ const AppRoot = () => {
         },
         { path: 'cart', element: <Suspense fallback={<LottieHandeller type="loading" />}><CartPage /></Suspense> },
         { path: 'profile', element: <Suspense fallback={<LottieHandeller type="loading" />}><ProfilePage /></Suspense> },
+        { path: 'register', element: <Suspense fallback={<LottieHandeller type="loading" />}><RegisterPage /></Suspense> },
+        { path: 'login', element: <Suspense fallback={<LottieHandeller type="loading" />}><LoginPage /></Suspense> }
       ]
     },
 
