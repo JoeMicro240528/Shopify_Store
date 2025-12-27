@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Storefront } from "@mui/icons-material"
 import { Box, Button, Container, FormControl, IconButton, InputAdornment, OutlinedInput, Stack, TextField, Typography } from "@mui/material"
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -53,35 +52,8 @@ const LoginPage = () => {
 
   return (
     <>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'start',
-        gap: 2,
-        p: 2
-
-      }}>
-        <Storefront color='primary' fontSize='large' sx={{ display: 'flex', mr: 0 }} />
-        <Typography
-          variant="h4"
-          noWrap
-          component="a"
-          href="#app-bar-with-responsive-menu"
-          sx={{
-            mr: 1,
-            display: 'flex',
-            fontFamily: 'monospace',
-            fontWeight: '900',
-            color: 'inherit',
-            textDecoration: 'none',
-
-          }}
-        >
-          Shopify
-        </Typography>
-      </Box>
       <Container>
-        <Box textAlign={'center'}>
+        <Box mt={5} textAlign={'center'}>
           <Typography variant="h4" fontWeight={'800'} sx={{ letterSpacing: '0 !important', mb: 1 }}>Welcome Back</Typography>
           <Typography variant="body1" fontWeight={'530'} color="#4B5563" sx={{ letterSpacing: '0 !important' }}>Log in to your account to continue shopping.</Typography>
         </Box>

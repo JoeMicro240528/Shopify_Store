@@ -1,5 +1,5 @@
 import React from "react";
-import { Google, Storefront } from "@mui/icons-material"
+import { Google } from "@mui/icons-material"
 import { Container, Box, Typography, Button, Divider, Stack, FormControl, TextField, IconButton, InputAdornment, OutlinedInput, Checkbox } from "@mui/material"
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -51,37 +51,9 @@ const RegisterPage = () => {
 
   return (
     <>
-      <Container>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          gap: 2,
-          p: 2
+      <Container sx={{ mt: 5 }} >
 
-        }}>
-          <Storefront color='primary' fontSize='large' sx={{ display: 'flex', mr: 1 }} />
-          <Typography
-            variant="h4"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: 'flex',
-              fontFamily: 'monospace',
-              fontWeight: '900',
-              color: 'inherit',
-              textDecoration: 'none',
-
-            }}
-          >
-            Shopify
-          </Typography>
-        </Box>
-        {/* <Divider /> */}
-
-        <Box textAlign={'center'} sx={{ m: '0 auto', mt: 2, height: 'auto', width: { xs: '80%', md: '35%' }, border: '1px solid #e4e4e4', bgcolor: "#FFF", borderRadius: 3, p: 4, }}>
+        <Box textAlign={'center'} sx={{ m: ' auto', mt: 2, height: 'auto', width: { xs: '80%', md: '35%' }, border: '1px solid #e4e4e4', bgcolor: "#FFF", borderRadius: 3, p: 4, }}>
           <Typography variant="h4" fontWeight={'700'} sx={{ letterSpacing: '0 !important' }}>Create Your Account</Typography>
           <Typography variant="body1" fontWeight={'530'} color="#4B5563" sx={{ letterSpacing: '0 !important' }}>Start your shopping journey with us.</Typography>
           <Button variant="outlined" sx={{ width: '100%', border: '1px solid #c9c9c9', textTransform: "capitalize", color: '#000', mt: 5, px: 4, py: 1.5, borderRadius: 3, bgcolor: 'inherit', '&:hover': { opacity: '0.7' } }}><Google /> Sign up with Google</Button>
