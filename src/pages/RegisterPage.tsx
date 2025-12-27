@@ -8,7 +8,7 @@ import { SingUpSchema, type ISingUpSchema } from "../validation/SingUpSchema";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import registerUser from "../store/auth/thunk/registerUser";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { resetUI } from "../store/auth/authSlice";
 import { usePasswordToggel } from "../hooks/usePasswordToggel";
 interface IFormInput extends ISingUpSchema { }
@@ -41,6 +41,13 @@ const RegisterPage = () => {
   }, [dispatch])
 
   const { showPassword, handleClickShowPassword, handleMouseDownPassword, handleMouseUpPassword } = usePasswordToggel()
+
+
+  const { access_token } = useAppSelector((state) => state.auth)
+
+  if (access_token) {
+    return <Navigate to="/" />
+  }
 
   return (
     <>

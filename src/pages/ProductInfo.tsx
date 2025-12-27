@@ -7,13 +7,16 @@ import Tabscontent from '../components/shared/Tabscontent';
 import AccordionInfo from '../components/shared/AccordionInfo';
 import { useGetProducts } from '../hooks/useGetProducts'
 import { useState } from 'react';
-import { useAppDispatch } from '../../src/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../src/store/hooks';
 import { addToCart } from '../store/cart/cartSlice';
 import { addToWishlist } from '../store/wishlist/wishlistSlice';
 import LottieHandeller from "../components/shared/LottieHandeller"
+import { useNavigate } from 'react-router';
 const ProductInfo = () => {
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const { access_token } = useAppSelector((state) => state.auth)
   const { record, loading, error } = useGetProducts();
 
   const [imageIndex, setImageIndex] = useState(0);
@@ -51,6 +54,7 @@ const ProductInfo = () => {
                     sx={{
                       border: "3px solid rgb(19 127 236)", borderRadius: 3,
                       transition: 'all 0.3s ease-in-out',
+                      cursor: 'pointer',
                       '&:hover': {
                         transform: 'scale(1.1)'
                       },
@@ -107,10 +111,28 @@ const ProductInfo = () => {
             </Stack>
           </Box>
           <Stack sx={{ flexDirection: { md: 'row', xs: 'column' } }} justifyContent={'center'} alignItems={'center'} gap={1.5}>
-            <Button onClick={() => dispatch(addToCart(record))} sx={{ width: '100%', textTransform: 'none', bgcolor: "#298BED !important", fontWeight: "600", fontSize: "14px" }} variant="contained" startIcon={<ShoppingCartIcon />}>
+            <Button onClick={
+              () => {
+                if (access_token) {
+                  dispatch(addToCart(record))
+                } else {
+                  navigate('/login')
+                }
+              }
+            }
+              sx={{ width: '100%', textTransform: 'none', bgcolor: "#298BED !important", fontWeight: "600", fontSize: "14px" }} variant="contained" startIcon={<ShoppingCartIcon />}>
               Add to Cart
             </Button>
-            <Button onClick={() => dispatch(addToWishlist(record))} sx={{ width: { md: "auto", xs: "100%" }, border: '1px solid #cfcfcf !important', color: '#F43F5E' }} variant="outlined">
+            <Button onClick={
+              () => {
+                if (access_token) {
+                  dispatch(addToWishlist(record))
+                } else {
+                  navigate('/login')
+                }
+              }
+            }
+              sx={{ width: { md: "auto", xs: "100%" }, border: '1px solid #cfcfcf !important', color: '#F43F5E' }} variant="outlined">
               <FavoriteBorder sx={{ fontSize: "22px" }} />
             </Button>
           </Stack>

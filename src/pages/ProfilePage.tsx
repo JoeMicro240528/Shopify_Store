@@ -1,48 +1,62 @@
 import { DeleteOutline, Edit, History, HomeOutlined, Logout, PaymentOutlined, Person2Outlined, TrackChanges } from "@mui/icons-material"
 import { Avatar, Box, Button, Divider, Stack, TextField, Typography } from "@mui/material"
+import { useNavigate } from "react-router"
+import { logOut } from '../store/auth/authSlice';
+import { useAppSelector, useAppDispatch } from "../store/hooks"
 const ProfilePage = () => {
+  const navigate = useNavigate()
+  const { user } = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
+
   return (
     <>
-      <Stack m={5} gap={5} sx={{ m: { md: 5, xs:0 }, mt: { md: 5, xs:3 }, gap: { md: 5, xs: 1 } }} direction={'row'}>
-        <Box sx={{ ml: { xs: "0", md: 0 }, width: { xs: '15%', md: '25%', }, border: '1px solid #d8d7d7', bgcolor: "#FFF", borderRadius: 3, p:1, height: { xs: '1350px', md: '820px' } }}>
+      <Stack m={5} gap={5} sx={{ m: { md: 5, xs: 0 }, mt: { md: 5, xs: 3 }, gap: { md: 5, xs: 1 } }} direction={'row'}>
+        <Box sx={{ ml: { xs: "0", md: 0 }, width: { xs: '15%', md: '25%', }, border: '1px solid #d8d7d7', bgcolor: "#FFF", borderRadius: 3, p: 1, height: { xs: '1350px', md: '820px' } }}>
           <Stack p={1} direction={'row'} gap={1} alignItems={'center'}>
-                 <Avatar sx={{width:"50px",height:"50px" ,bgcolor:'primary.main' }}>YA</Avatar>
-            <Box sx={{display:{md:'block',xs:"none"}}}>
-              <Typography variant="body1" fontWeight={'600'} sx={{ letterSpacing: '0 !important' }}>Yousef Albushra</Typography>
-              <Typography variant="body2" fontWeight={'530'} color="#4B5563" sx={{ letterSpacing: '0 !important' }}>yousefalboushra@gmail.com</Typography>
+            <Avatar sx={{ width: "50px", height: "50px", bgcolor: 'primary.main' }}>
+              <img src={user?.avatar} alt="avatar" />
+            </Avatar>
+            <Box sx={{ display: { md: 'block', xs: "none" } }}>
+              <Typography variant="body1" fontWeight={'600'} sx={{ letterSpacing: '0 !important' }}>{user?.name}</Typography>
+              <Typography variant="body2" fontWeight={'530'} color="#4B5563" sx={{ letterSpacing: '0 !important' }}>{user?.email}</Typography>
 
             </Box>
-           
+
           </Stack>
-           <Divider sx={{ width: { md: '100%', xs: '100%' }, my:2 }} />
-           <Box textAlign={'left'}>
-              <Stack direction={'row'} spacing={2} bgcolor={'#E7F2FD'} borderRadius={2} p={2} color={'#1396F1'} mt={2}>
-                  <Person2Outlined/>
-                  <Typography sx={{display:{md:'block',xs:"none"}}} variant="body1" color="inherit">My Profile</Typography>
-              </Stack>
+          <Divider sx={{ width: { md: '100%', xs: '100%' }, my: 2 }} />
+          <Box textAlign={'left'}>
+            <Stack direction={'row'} spacing={2} bgcolor={'#E7F2FD'} borderRadius={2} p={2} color={'#1396F1'} mt={2}>
+              <Person2Outlined />
+              <Typography sx={{ display: { md: 'block', xs: "none" } }} variant="body1" color="inherit">My Profile</Typography>
+            </Stack>
 
-              <Stack direction={'row'} spacing={2}  borderRadius={2} bgcolor={'inherit'} p={2} color={'#333'} mt={2}  sx={ {cursor:'pointer', transition:"all 0.1s ease-in" ,'&:hover':{bgcolor:"#F3F4F6"}}}>
-                  <History/>
-                  <Typography sx={{display:{md:'block',xs:"none"}}} variant="body1" color="inherit">Order History</Typography>
-              </Stack>
-              <Stack direction={'row'}  borderRadius={2} spacing={2} bgcolor={'inherit'} p={2} color={'#333'} mt={2}  sx={ {cursor:'pointer', transition:"all 0.1s ease-in" ,'&:hover':{bgcolor:"#F3F4F6"}}} >
-                  <TrackChanges/>
-                  <Typography variant="body1" sx={{display:{md:'block',xs:"none"}}} color="inherit">Track Shipments</Typography>
-              </Stack>
-               <Stack direction={'row'}  borderRadius={3} spacing={2} p={2} bgcolor={'inherit'} color={'#333'} mt={2}  sx={ {cursor:'pointer', transition:"all 0.1s ease-in" ,'&:hover':{bgcolor:"#F3F4F6"}}}>
-                  <HomeOutlined/>
-                  <Typography variant="body1" sx={{display:{md:'block',xs:"none"}}} color="inherit">Shipping Addresses</Typography>
-              </Stack>
-               <Stack direction={'row'}  borderRadius={3} spacing={2} p={2} bgcolor={'inherit'} color={'#333'} mt={2}  sx={ {cursor:'pointer', transition:"all 0.1s ease-in" ,'&:hover':{bgcolor:"#F3F4F6"}}}>
-                  <PaymentOutlined/>
-                  <Typography variant="body1" sx={{display:{md:'block',xs:"none"}}} color="inherit">Payment Methods</Typography>
-              </Stack>
+            <Stack direction={'row'} spacing={2} borderRadius={2} bgcolor={'inherit'} p={2} color={'#333'} mt={2} sx={{ cursor: 'pointer', transition: "all 0.1s ease-in", '&:hover': { bgcolor: "#F3F4F6" } }}>
+              <History />
+              <Typography sx={{ display: { md: 'block', xs: "none" } }} variant="body1" color="inherit">Order History</Typography>
+            </Stack>
+            <Stack direction={'row'} borderRadius={2} spacing={2} bgcolor={'inherit'} p={2} color={'#333'} mt={2} sx={{ cursor: 'pointer', transition: "all 0.1s ease-in", '&:hover': { bgcolor: "#F3F4F6" } }} >
+              <TrackChanges />
+              <Typography variant="body1" sx={{ display: { md: 'block', xs: "none" } }} color="inherit">Track Shipments</Typography>
+            </Stack>
+            <Stack direction={'row'} borderRadius={3} spacing={2} p={2} bgcolor={'inherit'} color={'#333'} mt={2} sx={{ cursor: 'pointer', transition: "all 0.1s ease-in", '&:hover': { bgcolor: "#F3F4F6" } }}>
+              <HomeOutlined />
+              <Typography variant="body1" sx={{ display: { md: 'block', xs: "none" } }} color="inherit">Shipping Addresses</Typography>
+            </Stack>
+            <Stack direction={'row'} borderRadius={3} spacing={2} p={2} bgcolor={'inherit'} color={'#333'} mt={2} sx={{ cursor: 'pointer', transition: "all 0.1s ease-in", '&:hover': { bgcolor: "#F3F4F6" } }}>
+              <PaymentOutlined />
+              <Typography variant="body1" sx={{ display: { md: 'block', xs: "none" } }} color="inherit">Payment Methods</Typography>
+            </Stack>
 
-           </Box>
-              <Stack direction={'row'}  borderRadius={3} spacing={2} p={2} bgcolor={'inherit'} color={'#333'} mt={3}  sx={ {cursor:'pointer', transition:"all 0.1s ease-in" ,'&:hover':{bgcolor:"#F3F4F6"}}}>
-                  <Logout/>
-                  <Typography variant="body1" sx={{display:{md:'block',xs:"none"}}} color="inherit">Logout</Typography>
-              </Stack>
+          </Box>
+          <Stack direction={'row'} borderRadius={3} spacing={2} p={2} bgcolor={'inherit'} color={'#333'} mt={3} sx={{ cursor: 'pointer', transition: "all 0.1s ease-in", '&:hover': { bgcolor: "#F3F4F6" } }}>
+            <Logout />
+            <Typography onClick={
+              () => {
+                dispatch(logOut())
+                navigate('/login')
+              }
+            } variant="body1" sx={{ display: { md: 'block', xs: "none" } }} color="inherit">Logout</Typography>
+          </Stack>
         </Box>
         <Box width={'100%'}>
           <Box sx={{ ml: { xs: 0, md: 0 }, width: { md: '95%', xs: '80%', }, border: '1px solid #d8d7d7', bgcolor: "#FFF", borderRadius: 3, p: 4, height: 'auto' }}>
@@ -54,11 +68,11 @@ const ProfilePage = () => {
               <Stack mb={3} sx={{ flexDirection: { md: 'row', xs: 'column' }, width: { md: '100%', xs: '100%' } }} gap={5}>
                 <Stack width={'100%'}>
                   <label style={{ fontSize: "18px", fontWeight: '500', color: "#111418" }} htmlFor="outlined-basic">Full Name</label>
-                  <TextField sx={{ width: '100%', mt: 1.5 }} type="text" id="outlined-basic" value={'Yousef Alboshra'} variant="outlined" />
+                  <TextField sx={{ width: '100%', mt: 1.5 }} type="text" id="outlined-basic" value={user?.name} variant="outlined" />
                 </Stack>
                 <Stack width={'100%'}>
                   <label style={{ fontSize: "18px", fontWeight: '500', color: "#111418" }} htmlFor="outlined-basic">Email Address</label>
-                  <TextField sx={{ width: '100%', mt: 1.5 }} type="email" id="outlined-basic" value={'yousefalboushra@gmail.com'} variant="outlined" />
+                  <TextField sx={{ width: '100%', mt: 1.5 }} type="email" id="outlined-basic" value={user?.email} variant="outlined" />
                 </Stack>
               </Stack>
               <Stack sx={{ flexDirection: { md: 'row', xs: 'column' }, width: { md: '100%', xs: '100%' } }} alignItems={'center'} gap={5}>

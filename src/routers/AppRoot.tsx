@@ -7,6 +7,7 @@ import MainLayouts from "../layouts/MainLayouts"
 import { lazy } from 'react'
 import { Suspense } from 'react'
 import LottieHandeller from "../components/shared/LottieHandeller";
+import { ProtectedRoute } from "../components/shared/Auth/ProtectedRoute";
 
 const Home = lazy(() => import('../pages/Home'));
 const Categories = lazy(() => import('../pages/Categories'));
@@ -27,7 +28,15 @@ const AppRoot = () => {
           path: 'categories', element: <Suspense fallback={<LottieHandeller type="loading" />}><Categories /></Suspense>
         },
         { path: 'all products', element: <Suspense fallback={<LottieHandeller type="loading" />}><Products /></Suspense> },
-        { path: 'wishlist', element: <Suspense fallback={<LottieHandeller type="loading" />}><WishlistPage /></Suspense> },
+        {
+          path: 'wishlist', element:
+            <ProtectedRoute>
+              <Suspense fallback={<LottieHandeller type="loading" />}>
+                <WishlistPage />
+              </Suspense>
+            </ProtectedRoute>
+
+        },
         {
           path: 'category/product/:slug', element: <Products />,
           loader: ({ params }) => {
@@ -54,8 +63,22 @@ const AppRoot = () => {
             return true;
           }
         },
-        { path: 'cart', element: <Suspense fallback={<LottieHandeller type="loading" />}><CartPage /></Suspense> },
-        { path: 'profile', element: <Suspense fallback={<LottieHandeller type="loading" />}><ProfilePage /></Suspense> },
+        {
+          path: 'cart', element:
+            <ProtectedRoute>
+              <Suspense fallback={<LottieHandeller type="loading" />}>
+                <CartPage />
+              </Suspense>
+            </ProtectedRoute>
+        },
+        {
+          path: 'profile', element:
+            <ProtectedRoute>
+              <Suspense fallback={<LottieHandeller type="loading" />}>
+                <ProfilePage />
+              </Suspense>
+            </ProtectedRoute>
+        },
         { path: 'register', element: <Suspense fallback={<LottieHandeller type="loading" />}><RegisterPage /></Suspense> },
         { path: 'login', element: <Suspense fallback={<LottieHandeller type="loading" />}><LoginPage /></Suspense> }
       ]

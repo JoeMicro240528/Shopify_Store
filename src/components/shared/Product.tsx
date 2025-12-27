@@ -8,13 +8,15 @@ import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
 import type { TProduct } from '../../types/product';
 import { useNavigate } from "react-router"
 import { addToCart } from '../../store/cart/cartSlice';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addToWishlist } from '../../store/wishlist/wishlistSlice';
 
 const Product = ({ product }: { product: TProduct }) => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const { access_token } = useAppSelector((state) => state.auth)
+
     return (
         <>
             <Card variant='outlined' sx={{
@@ -56,7 +58,16 @@ const Product = ({ product }: { product: TProduct }) => {
                                     color: '#fff'
                                 }
 
-                            }} onClick={() => dispatch(addToWishlist(product))}><FavoriteBorder /></Button>
+                            }} onClick={
+                                () => {
+                                    if (access_token) {
+                                        dispatch(addToWishlist(product))
+                                    } else {
+                                        navigate('/login')
+                                    }
+                                }
+                            }>
+                                <FavoriteBorder /></Button>
                             <Button size="small" sx={{
                                 borderRadius: '10%',
                                 padding: '7px',
@@ -68,7 +79,15 @@ const Product = ({ product }: { product: TProduct }) => {
                                     color: '#fff'
                                 }
 
-                            }} onClick={() => dispatch(addToCart(product))}><AddShoppingCart /></Button>
+                            }} onClick={() => {
+                                if (access_token) {
+                                    dispatch(addToCart(product))
+                                } else {
+                                    navigate('/login')
+                                }
+                            }
+
+                            }><AddShoppingCart /></Button>
 
                         </CardActions>
                     </Box>

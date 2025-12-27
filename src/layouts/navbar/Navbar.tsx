@@ -16,14 +16,20 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import SearchFiled from './SearchFiled';
 import CardBadge from './CardBadge';
-
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useNavigate } from 'react-router';
 import WishlistBadge from './WishlistBadge';
+import { Stack } from '@mui/material';
+import { logOut } from '../../store/auth/authSlice';
 
 const pages = ['Home', 'Categories', 'All Products'];
 const settings = ['Profile', 'Logout'];
 
 function Navbar() {
+
+    const dispatch = useAppDispatch()
+
+    const { user, access_token } = useAppSelector((state) => state.auth)
 
     const navgate = useNavigate();
 
@@ -115,9 +121,7 @@ function Navbar() {
                                     </Typography>
                                 </MenuItem>
                             ))}
-                            <MenuItem >
-                                <Typography sx={{ textAlign: 'center' }}><SearchFiled /></Typography>
-                            </MenuItem>
+
                         </Menu>
                     </Box>
                     <Storefront color='primary' fontSize='large' sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -159,9 +163,6 @@ function Navbar() {
                             </Button>
                         ))}
                     </Box>
-                    <Box sx={{ flexGrow: 0, mr: 2, display: { xs: 'none', md: 'block' } }}>
-                        <SearchFiled />
-                    </Box>
                     <Box
                         onClick={() => {
                             navgate(`/wishlist`)
@@ -178,39 +179,65 @@ function Navbar() {
                         <CardBadge Icon={<ShoppingCartIcon />} />
 
                     </Box>
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Yousef Albushra" src="/static/images/avatar/2.jpg" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}
-                                        onClick={() => {
-                                            navgate(`/${setting.toLowerCase()}`)
-                                        }}
-                                    >{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
+                    {
+                        access_token ?
+                            <Box sx={{ flexGrow: 0 }}>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        <Avatar alt={user?.name} src={user?.avatar} />
+                                    </IconButton>
+                                </Tooltip>
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    {settings.map((setting) => (
+                                        <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                            <Typography sx={{ textAlign: 'center' }}
+                                                onClick={() => {
+                                                    navgate(`/${setting.toLowerCase()}`)
+                                                    if (setting.toLowerCase() === 'logout') {
+                                                        dispatch(logOut())
+                                                        navgate('/login')
+                                                    }
+                                                }}
+                                            >{setting}</Typography>
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            </Box>
+                            :
+                            <Stack spacing={2} direction={'row'}>
+                                <Button onClick={
+                                    () => {
+                                        navgate('/login')
+                                    }
+                                } variant="contained" color="primary" sx={{ mt: 1, px: 2, py: 1, borderRadius: 2, bgcolor: 'rgba(59 ,130, 246)', '&:hover': { bgcolor: 'rgba(59 ,130, 246, 0.8)' } }}>
+                                    {'Login'.toLowerCase()}
+                                </Button>
+                                <Button onClick={
+                                    () => {
+                                        navgate('/register')
+                                    }
+                                } variant='outlined' sx={{ color: 'primary.main', mt: 1, px: 2, py: 1, borderRadius: 2, '&:hover': { bgcolor: 'rgba(59 ,130, 246)', color: '#FFFFFF' } }}>
+                                    {'Register'.toLowerCase()}
+                                </Button>
+                            </Stack>
+
+
+                    }
                 </Toolbar>
             </Container>
         </AppBar>

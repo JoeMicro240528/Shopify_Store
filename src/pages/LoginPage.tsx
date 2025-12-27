@@ -8,7 +8,7 @@ import { SingInSchema, type ISingInSchema } from "../validation/SingInSchema";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import loginUser from "../store/auth/thunk/loginUser";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import getUserData from "../store/auth/thunk/getUserData";
 import { resetUI } from "../store/auth/authSlice";
 import { usePasswordToggel } from "../hooks/usePasswordToggel";
@@ -44,6 +44,12 @@ const LoginPage = () => {
 
 
   const { showPassword, handleClickShowPassword, handleMouseDownPassword, handleMouseUpPassword } = usePasswordToggel()
+
+  const { access_token } = useAppSelector((state) => state.auth)
+
+  if (access_token) {
+    return <Navigate to="/" />
+  }
 
   return (
     <>
