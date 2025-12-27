@@ -14,7 +14,6 @@ import MenuItem from '@mui/material/MenuItem';
 import { Storefront } from '@mui/icons-material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import SearchFiled from './SearchFiled';
 import CardBadge from './CardBadge';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useNavigate } from 'react-router';
