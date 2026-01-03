@@ -9,7 +9,7 @@ const getCategories = createAsyncThunk('categories/getCategories', async (_, thu
 
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await axios.get<TCategory[]>('https://api.escuelajs.co/api/v1/categories')
+        const response = await axios.get<TCategory[]>('/categories')
         return response.data
     } catch (error) {
         return rejectWithValue(AxiosErrorHandelling(error))

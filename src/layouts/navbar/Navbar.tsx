@@ -123,27 +123,7 @@ function Navbar() {
 
                         </Menu>
                     </Box>
-                    <Storefront color='primary' fontSize='large' sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href="/home"
-                        onClick={() => {
-                            navgate(`/home`)
-                        }}
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        Shopify
-                    </Typography>
+                    <Storefront color='primary' fontSize='large' sx={{ display: { xs: 'flex', md: 'none' }, mr: 5 }} />
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, }}>
                         {pages.map((page) => (
                             <Button
@@ -162,22 +142,28 @@ function Navbar() {
                             </Button>
                         ))}
                     </Box>
-                    <Box
-                        onClick={() => {
-                            navgate(`/wishlist`)
-                        }}
-                        sx={{ flexGrow: 0, fontSize: { xs: "5px" }, mr: { md: 2, xs: 0.5 } }}>
+                    <Stack>
+                        {
+                            access_token ? <>
+                                <Box
+                                    onClick={() => {
+                                        navgate(`/wishlist`)
+                                    }}
+                                    sx={{ flexGrow: 0, fontSize: { xs: "5px" }, mr: { md: 2, xs: 0.5 } }}>
 
-                        <WishlistBadge Icon={<FavoriteBorder />} />
-                    </Box>
-                    <Box
-                        onClick={() => {
-                            navgate(`/cart`)
-                        }}
-                        sx={{ flexGrow: 0, mr: { md: 2, xs: 0.5 }, fontSize: { xs: "5px" } }}>
-                        <CardBadge Icon={<ShoppingCartIcon />} />
+                                    <WishlistBadge Icon={<FavoriteBorder />} />
+                                </Box>
+                                <Box
+                                    onClick={() => {
+                                        navgate(`/cart`)
+                                    }}
+                                    sx={{ flexGrow: 0, mr: { md: 2, xs: 0.5 }, fontSize: { xs: "5px" } }}>
+                                    <CardBadge Icon={<ShoppingCartIcon />} />
 
-                    </Box>
+                                </Box>
+                            </> : null
+                        }
+                    </Stack>
                     {
                         access_token ?
                             <Box sx={{ flexGrow: 0 }}>
@@ -218,19 +204,19 @@ function Navbar() {
                                 </Menu>
                             </Box>
                             :
-                            <Stack spacing={2} direction={'row'}>
+                            <Stack sx={{ width: { xs: '60%', md: 'auto' } }} spacing={1} direction={'row'}>
                                 <Button onClick={
                                     () => {
                                         navgate('/login')
                                     }
-                                } variant="contained" color="primary" sx={{ mt: 1, px: 2, py: 1, borderRadius: 2, bgcolor: 'rgba(59 ,130, 246)', '&:hover': { bgcolor: 'rgba(59 ,130, 246, 0.8)' } }}>
+                                } variant="contained" color="primary" sx={{ width: '100%', mt: 1, px: 2, py: 1, borderRadius: 2, bgcolor: 'rgba(59 ,130, 246)', '&:hover': { bgcolor: 'rgba(59 ,130, 246, 0.8)' } }}>
                                     {'Login'.toLowerCase()}
                                 </Button>
                                 <Button onClick={
                                     () => {
                                         navgate('/register')
                                     }
-                                } variant='outlined' sx={{ color: 'primary.main', mt: 1, px: 2, py: 1, borderRadius: 2, '&:hover': { bgcolor: 'rgba(59 ,130, 246)', color: '#FFFFFF' } }}>
+                                } variant='outlined' sx={{ width: '100%', color: 'primary.main', mt: 1, px: 2, py: 1, borderRadius: 2, '&:hover': { bgcolor: 'rgba(59 ,130, 246)', color: '#FFFFFF' } }}>
                                     {'Register'.toLowerCase()}
                                 </Button>
                             </Stack>

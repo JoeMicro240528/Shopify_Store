@@ -16,7 +16,7 @@ const getUserData = createAsyncThunk<TUserData, string, { state: RootState }>('a
     const access_token = getState().auth.access_token;
 
     try {
-        const response = await axios.get('https://api.escuelajs.co/api/v1/auth/profile',
+        const response = await axios.get('/auth/profile',
             { headers: { Authorization: `Bearer ${access_token}` } }
         );
 

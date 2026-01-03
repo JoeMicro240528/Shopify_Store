@@ -155,7 +155,7 @@ const RegisterPage = () => {
               </Stack>
 
               <Button disabled={loading == "pending" ? true : false} onClick={handleSubmit(onSubmit)} variant="contained" sx={{ width: '100%', textTransform: "capitalize", color: '#ffffff', my: 1, px: 4, py: 1.5, fontSize: "15px", borderRadius: 3, fontWeight: 'bold', bgcolor: '#2A8CEE', '&:hover': { opacity: '0.7' } }}>{loading == "pending" ? "Loading..." : "Create Account"}</Button>
-              <Typography variant="body1" textAlign={'center'} color="initial">Already have an account?<Typography component={'a'} href="#" sx={{ color: "#2A8CEE", fontWeight: "600", textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}> Login </Typography></Typography>
+              <Typography variant="body1" textAlign={'center'} color="initial">Already have an account?<Typography component={'a'} href="/login" sx={{ color: "#2A8CEE", fontWeight: "600", textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}> Login </Typography></Typography>
             </Stack>
             {error && <Typography variant="body2" color="error.main">{error}</Typography>}
           </FormControl>

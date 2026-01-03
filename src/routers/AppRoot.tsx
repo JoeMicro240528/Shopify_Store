@@ -8,6 +8,7 @@ import { lazy } from 'react'
 import { Suspense } from 'react'
 import LottieHandeller from "../components/shared/LottieHandeller";
 import { ProtectedRoute } from "../components/shared/Auth/ProtectedRoute";
+import '../api/axios-global'
 
 const Home = lazy(() => import('../pages/Home'));
 const Categories = lazy(() => import('../pages/Categories'));

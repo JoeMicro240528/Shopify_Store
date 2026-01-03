@@ -17,7 +17,7 @@ const getProductbyCategories = createAsyncThunk<TProduct[], string, { state: Roo
     }
 
     try {
-        const response = await axios.get<TProduct[]>(`https://api.escuelajs.co/api/v1/categories/${id}/products`)
+        const response = await axios.get<TProduct[]>(`/categories/${id}/products`)
         return response.data
     } catch (error) {
         return rejectWithValue(AxiosErrorHandelling(error))

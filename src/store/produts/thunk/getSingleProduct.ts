@@ -10,7 +10,7 @@ const getSingleProduct = createAsyncThunk<TProduct, number, { state: RootState }
     const { rejectWithValue } = thunkAPI
 
     try {
-        const response = await axios.get<TProduct>(`https://api.escuelajs.co/api/v1/products/${id}`)
+        const response = await axios.get<TProduct>(`/products/${id}`)
         return response.data
     } catch (error) {
         return rejectWithValue(AxiosErrorHandelling(error))

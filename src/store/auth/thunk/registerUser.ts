@@ -13,7 +13,7 @@ const registerUser = createAsyncThunk('auth/registerUser', async (formData: TFor
 
     const { rejectWithValue } = thunkAPI
     try {
-        const response = await axios.post('https://api.escuelajs.co/api/v1/users/', formData);
+        const response = await axios.post('/users/', formData);
         console.log(response.data)
         return response.data
 
