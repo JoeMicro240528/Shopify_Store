@@ -1,17 +1,20 @@
-import { Box, Button, Divider, Select, Stack, Typography, type SelectChangeEvent } from "@mui/material"
+import { Box, Button, Divider, Select, Stack, Typography } from "@mui/material"
 import Breadcrumb from "../components/shared/Breadcrumb"
 import AccordionFillter from "../components/shared/AccordionFillter"
 import Product from "../components/shared/Product"
 import Pagination from '@mui/material/Pagination';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { useGetProducts } from '../hooks/useGetProducts'
 import { useParams } from "react-router";
 import ProductSkeleton from "../components/shared/ProductSkeleton";
-
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
+import SearchFiled from "../components/shared/SearchFiled";
 const Products = () => {
+
+  useStartTopScreen()
 
   const { slug } = useParams();
   const { fullyProduct } = useGetProducts();
@@ -20,26 +23,23 @@ const Products = () => {
   const [sortOrder, setSortOrder] = useState('');
   const [page, setPage] = useState(1);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setSortOrder(event.target.value);
-  };
 
+  useEffect(() => {
 
-
-
-  const handleSort = () => {
     if (sortOrder === 'Newest') {
-      return fullyProduct.sort((a, b) => b.title.localeCompare(a.title));
+      fullyProduct.sort((a, b) => b.title.localeCompare(a.title));
     } else if (sortOrder === 'Price: Low to High') {
-      return fullyProduct.sort((a, b) => a.price - b.price);
+      fullyProduct.sort((a, b) => a.price - b.price);
     } else if (sortOrder === 'Price: High to Low') {
-      return fullyProduct.sort((a, b) => b.price - a.price);
+      fullyProduct.sort((a, b) => b.price - a.price);
     } else if (sortOrder === 'Best Selling') {
-      return fullyProduct.sort((a, b) => b.price - a.price);
+      fullyProduct.sort((a, b) => a.price - b.price);
     }
-    return fullyProduct;
-  };
 
+    console.log(fullyProduct)
+    console.log(sortOrder)
+
+  }, [sortOrder])
 
 
   return (
@@ -71,23 +71,27 @@ const Products = () => {
       </Box>
 
       <Box sx={{ width: { xs: '100%', md: '65%' } }} >
-        <Stack direction="row" justifyContent="space-between" alignItems={'center'} sx={{ display: { md: 'flex', xs: 'block' } }} mb={1}>
+        <Stack direction="row" justifyContent="space-between" alignItems={'center'} sx={{ display: { md: 'flex', xs: 'flex' }, flexWrap: 'wrap-reverse' }} mb={1}>
           <Typography ml={3} variant="body2" fontWeight={'500'} color={"#6B7280"}>
             {fullyProduct.length * 6}+ Products Available
           </Typography>
+          <Box sx={{ width: { xs: '70%', md: 'auto' }, my: { xs: 2, md: 'auto' } }}>
+            <SearchFiled />
+          </Box>
           <Typography variant="body2" color={"#6B7280"} sx={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
           }} >
-            Sort by:   <FormControl component={'form'} onSelect={handleSort} sx={{ m: 1, minWidth: 120 }} size="small">
+            Sort by:   <FormControl component={'form'} sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="demo-select-small-label">Sort by</InputLabel>
               <Select
                 labelId="demo-select-small-label"
                 id="demo-select-small"
                 value={sortOrder}
                 label="Sort by"
-                onChange={handleChange}
+                // onChange={handleChange}
+                onChange={(e) => setSortOrder(e.target.value)}
               >
                 <MenuItem value={'Newest'}>Newest</MenuItem>
                 <MenuItem value={'Price: Low to High'}>Price: Low to High</MenuItem>

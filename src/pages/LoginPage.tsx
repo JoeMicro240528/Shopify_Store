@@ -11,9 +11,11 @@ import { Navigate, useNavigate } from "react-router";
 import getUserData from "../store/auth/thunk/getUserData";
 import { resetUI } from "../store/auth/authSlice";
 import { usePasswordToggel } from "../hooks/usePasswordToggel";
-
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
 interface IFormInput extends ISingInSchema { }
 const LoginPage = () => {
+
+  useStartTopScreen()
 
   const { loading, error } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()

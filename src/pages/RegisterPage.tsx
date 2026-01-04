@@ -11,9 +11,12 @@ import registerUser from "../store/auth/thunk/registerUser";
 import { Navigate, useNavigate } from "react-router";
 import { resetUI } from "../store/auth/authSlice";
 import { usePasswordToggel } from "../hooks/usePasswordToggel";
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
 interface IFormInput extends ISingUpSchema { }
 
 const RegisterPage = () => {
+
+  useStartTopScreen()
 
   const { loading, error } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()

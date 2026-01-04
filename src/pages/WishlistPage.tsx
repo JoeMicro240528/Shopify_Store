@@ -7,16 +7,19 @@ import { useAppDispatch } from '../store/hooks'
 import { useWishlist } from "../hooks/useWishlist"
 import LottieHandeller from "../components/shared/LottieHandeller"
 import { useEffect, useState } from "react"
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
 const WishlistPage = () => {
     const dispatch = useAppDispatch()
     const { fullyProduct, error, items } = useWishlist()
 
     const [loading, setLoading] = useState('pending')
 
+    useStartTopScreen()
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading('success')
-        }, 2000)
+        }, 1500)
 
 
         return () => {

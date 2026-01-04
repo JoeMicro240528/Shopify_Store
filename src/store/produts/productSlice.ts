@@ -4,6 +4,7 @@ import type { TProduct } from "../../types/product";
 import type { Tloading } from "../../types/shared";
 import getAllProduts from "./thunk/getAllProduts";
 import getSingleProduct from "./thunk/getSingleProduct";
+import searchProductByTitle from "./thunk/searchProductByTitle";
 
 type Tproducts = {
     records: TProduct[]
@@ -72,6 +73,21 @@ const productsSlice = createSlice({
             state.record = action.payload
         })
         builder.addCase(getSingleProduct.rejected, (state, action) => {
+            state.loading = 'failed'
+            state.error = action.error.message as string
+        })
+
+        // search product by title
+        builder.addCase(searchProductByTitle.pending, (state) => {
+            state.loading = 'pending'
+            state.error = null
+            state.records = []
+        })
+        builder.addCase(searchProductByTitle.fulfilled, (state, action) => {
+            state.loading = 'succseeded'
+            state.records = action.payload
+        })
+        builder.addCase(searchProductByTitle.rejected, (state, action) => {
             state.loading = 'failed'
             state.error = action.error.message as string
         })

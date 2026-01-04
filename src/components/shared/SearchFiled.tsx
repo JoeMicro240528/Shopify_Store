@@ -1,6 +1,8 @@
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import searchProductByTitle from '../../store/produts/thunk/searchProductByTitle';
+import { useAppDispatch } from '../../store/hooks';
 
 
 
@@ -52,6 +54,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchFiled = () => {
+
+
+
+  const dispatch = useAppDispatch()
+
   return (
     <Search sx={{ '&:focus-within': { borderColor: 'primary.main' } }}>
       <SearchIconWrapper>
@@ -60,6 +67,9 @@ const SearchFiled = () => {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
+        onChange={(e) => {
+          dispatch(searchProductByTitle(e.target.value))
+        }}
       />
     </Search>
   )

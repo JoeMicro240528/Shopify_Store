@@ -4,8 +4,11 @@ import Breadcrumb from "../components/shared/Breadcrumb"
 import { useGetCategories } from '../hooks/useGetCategories'
 import LottieHandeller from "../components/shared/LottieHandeller"
 import CategorySkeleton from "../components/shared/CategorySkeleton"
+import { useStartTopScreen } from '../hooks/useStartTopScreen'
 
 const Categories = () => {
+
+  useStartTopScreen()
 
   const { categories, error, loading } = useGetCategories()
 

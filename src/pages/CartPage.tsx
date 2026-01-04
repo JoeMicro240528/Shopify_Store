@@ -6,8 +6,11 @@ import { Link } from "react-router"
 import { useCartPage } from "../hooks/useCartPage"
 import LottieHandeller from "../components/shared/LottieHandeller"
 import { useEffect, useState } from "react"
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
 
 const CartPage = () => {
+
+  useStartTopScreen()
 
   const { fullyProduct, error, navigate } = useCartPage()
 
@@ -16,7 +19,7 @@ const CartPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading('success')
-    }, 2000)
+    }, 1500)
 
 
     return () => {

@@ -4,14 +4,14 @@
 import { Box, Skeleton, Stack } from "@mui/material"
 const ProductSkeleton = () => {
     return (
-        <Box>
-            <Skeleton variant="rectangular" width={226} height={350} />
-            <Stack mt={2} mr={5} direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Skeleton variant="rectangular" width={64} height={38} />
-                <Skeleton variant="rectangular" width={64} height={38} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <Skeleton variant="rectangular" sx={{ md: { width: '226px' }, xs: { width: '100%' } }} height={350} />
+            <Stack mt={2} mr={5} direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }} spacing={2}>
+                <Skeleton variant="rectangular" sx={{ md: { width: '64px' }, xs: { width: '100%' } }} height={38} />
+                <Skeleton variant="rectangular" sx={{ md: { width: '64px' }, xs: { width: '100%' } }} height={38} />
             </Stack>
-            <Skeleton variant="text" width={226} height={48} />
-            <Skeleton variant="text" width={226} height={24} />
+            <Skeleton variant="text" sx={{ md: { width: '226px' }, xs: { width: '100%' } }} height={48} />
+            <Skeleton variant="text" sx={{ md: { width: '226px' }, xs: { width: '100%' } }} height={24} />
         </Box>
 
     )

@@ -12,7 +12,10 @@ import { addToCart } from '../store/cart/cartSlice';
 import { addToWishlist } from '../store/wishlist/wishlistSlice';
 import LottieHandeller from "../components/shared/LottieHandeller"
 import { useNavigate } from 'react-router';
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
 const ProductInfo = () => {
+
+  useStartTopScreen()
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()

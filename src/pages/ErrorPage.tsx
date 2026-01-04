@@ -2,8 +2,12 @@ import { ArrowBack, CheckCircleOutline, Refresh, Storefront } from "@mui/icons-m
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material"
 import { Link, useRouteError, isRouteErrorResponse } from "react-router"
 import LottieHandeller from "../components/shared/LottieHandeller"
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
 const ErrorPage = () => {
+
   const error = useRouteError();
+
+  useStartTopScreen()
 
   let errorStatus: number;
   let errorText: string;

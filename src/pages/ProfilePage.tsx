@@ -3,7 +3,11 @@ import { Avatar, Box, Button, Divider, Stack, TextField, Typography } from "@mui
 import { useNavigate } from "react-router"
 import { logOut } from '../store/auth/authSlice';
 import { useAppSelector, useAppDispatch } from "../store/hooks"
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
 const ProfilePage = () => {
+
+  useStartTopScreen()
+
   const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()

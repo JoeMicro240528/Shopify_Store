@@ -4,14 +4,19 @@ import Product from "../components/shared/Product"
 import CategoryProduct from "../components/shared/CategoryProduct"
 import { useGetCategories } from "../hooks/useGetCategories"
 import { useGetProducts } from "../hooks/useGetProducts"
+import { useStartTopScreen } from "../hooks/useStartTopScreen"
 import type { TProduct } from "../types/product"
 import type { TCategory } from "../types/category"
 import CategorySkeleton from "../components/shared/CategorySkeleton"
 import ProductSkeleton from "../components/shared/ProductSkeleton"
 const Home = () => {
+
   const { categories } = useGetCategories();
   const { fullyProduct } = useGetProducts();
   const fackArray = Array.from({ length: 8 }, (_, index) => index + 1);
+
+  useStartTopScreen()
+
   return (
     <>
       <Container sx={{ mt: 7 }} >
