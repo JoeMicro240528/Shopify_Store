@@ -142,7 +142,7 @@ function Navbar() {
                             </Button>
                         ))}
                     </Box>
-                    <Stack>
+                    <Stack direction={'row'} spacing={1}>
                         {
                             access_token ? <>
                                 <Box

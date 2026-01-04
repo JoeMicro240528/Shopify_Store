@@ -98,7 +98,7 @@ const LoginPage = () => {
             </Stack>
           </FormControl>
         </Box>
-        <Typography variant="body1" textAlign={'center'} my={3} color="#9a9898">Don't have an account? <Typography component={'a'} href="/register" sx={{ color: "#2A8CEE", fontWeight: "600", textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}> Sign Up </Typography></Typography>
+        <Typography variant="body1" textAlign={'center'} my={3} color="#9a9898">Don't have an account? <Typography component={'a'} onClick={() => navgait('/register')} sx={{ color: "#2A8CEE", fontWeight: "600", textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}> Sign Up </Typography></Typography>
         {error && <Typography variant="body2" color="error.main">{error}</Typography>}
       </Container>
     </>
