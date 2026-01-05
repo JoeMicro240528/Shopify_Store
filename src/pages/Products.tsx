@@ -12,6 +12,8 @@ import { useParams } from "react-router";
 import ProductSkeleton from "../components/shared/ProductSkeleton";
 import { useStartTopScreen } from "../hooks/useStartTopScreen"
 import SearchFiled from "../components/shared/SearchFiled";
+import fillterProducts from "../store/produts/thunk/fillterProducts";
+import { useAppDispatch } from "../store/hooks";
 const Products = () => {
 
   useStartTopScreen()
@@ -19,10 +21,16 @@ const Products = () => {
   const { slug } = useParams();
   const { fullyProduct } = useGetProducts();
 
+  const dispatch = useAppDispatch()
+
   const fackArray = Array.from({ length: 6 }, (_, index) => index + 1);
   const [sortOrder, setSortOrder] = useState('');
   const [page, setPage] = useState(1);
-
+  const [filters, setFilters] = useState({
+    category: slug || '',
+    minPrice: 5,
+    maxPrice: 30
+  })
 
   useEffect(() => {
 
@@ -35,9 +43,6 @@ const Products = () => {
     } else if (sortOrder === 'Best Selling') {
       fullyProduct.sort((a, b) => a.price - b.price);
     }
-
-    console.log(fullyProduct)
-    console.log(sortOrder)
 
   }, [sortOrder])
 
@@ -58,13 +63,13 @@ const Products = () => {
           <Divider orientation="horizontal" flexItem />
         </Typography>
         <Box my={2} sx={{ width: '90%' }}>
-          <AccordionFillter />
+          <AccordionFillter filters={filters} setFilters={setFilters} />
         </Box>
         <Box my={2} width={"90%"} sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-          <Button variant="contained" sx={{ fontWeight: "600", bgcolor: 'primary', color: '#FFF', textTransform: 'none', width: '100%', borderRadius: 2, '&:hover': { bgcolor: 'primary.dark' } }}>
+          <Button onClick={() => dispatch(fillterProducts(filters))} variant="contained" sx={{ fontWeight: "600", bgcolor: 'primary', color: '#FFF', textTransform: 'none', width: '100%', borderRadius: 2, '&:hover': { bgcolor: 'primary.dark' } }}>
             Apply Filters
           </Button>
-          <Button variant="contained" sx={{ fontWeight: "600", bgcolor: '#E5E7EB', color: '#374151', textTransform: 'none', width: '100%', borderRadius: 2, '&:hover': { bgcolor: '#D1D5DB' } }}>
+          <Button onClick={() => setFilters({ category: '', minPrice: 5, maxPrice: 30 })} variant="contained" sx={{ fontWeight: "600", bgcolor: '#E5E7EB', color: '#374151', textTransform: 'none', width: '100%', borderRadius: 2, '&:hover': { bgcolor: '#D1D5DB' } }}>
             Reset
           </Button>
         </Box>
@@ -90,7 +95,6 @@ const Products = () => {
                 id="demo-select-small"
                 value={sortOrder}
                 label="Sort by"
-                // onChange={handleChange}
                 onChange={(e) => setSortOrder(e.target.value)}
               >
                 <MenuItem value={'Newest'}>Newest</MenuItem>
