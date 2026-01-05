@@ -9,6 +9,7 @@ import LottieHandeller from "../components/shared/LottieHandeller"
 import { useEffect, useState } from "react"
 import { useStartTopScreen } from "../hooks/useStartTopScreen"
 import useToster from "../hooks/useToster";
+import { confirm } from "../components/shared/ConfairmAction";
 const WishlistPage = () => {
     const dispatch = useAppDispatch()
     const { fullyProduct, error, items } = useWishlist()
@@ -46,7 +47,14 @@ const WishlistPage = () => {
                 <Typography variant="h4" fontWeight={'900'} my={2} sx={{ letterSpacing: '0 !important' }}>
                     Wishlist
                 </Typography>
-                <Button variant="contained" size="small" sx={{ width: '150px', height: '40px', mr: 2, bgcolor: '#8989CE', '&:hover': { bgcolor: '#8989CE' } }} onClick={() => { dispatch(clearWishlist()), toastify({ type: 'success', message: 'Wishlist cleared' }) }}>Clear</Button>
+                <Button variant="contained" size="small" sx={{ width: '150px', height: '40px', mr: 2, bgcolor: '#8989CE', '&:hover': { bgcolor: '#8989CE' } }}
+                    onClick={async () => {
+                        const clear = await confirm({ message: 'Are you sure you want to clear your wishlist?' })
+                        if (clear) {
+                            dispatch(clearWishlist())
+                            toastify({ type: 'success', message: 'Wishlist cleared' })
+                        }
+                    }}>Clear</Button>
             </Stack>
             <Typography sx={{ width: '90%' }} variant="body1" color={"#6B7280"} >
                 <Divider orientation="horizontal" flexItem />

@@ -21,7 +21,7 @@ import WishlistBadge from './WishlistBadge';
 import { Stack } from '@mui/material';
 import { logOut } from '../../store/auth/authSlice';
 import useToster from '../../hooks/useToster';
-
+import { confirm } from '../../components/shared/ConfairmAction'
 const pages = ['Home', 'Categories', 'All Products'];
 const settings = ['Profile', 'Logout'];
 
@@ -194,12 +194,17 @@ function Navbar() {
                                     {settings.map((setting) => (
                                         <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                             <Typography sx={{ textAlign: 'center' }}
-                                                onClick={() => {
-                                                    navgate(`/${setting.toLowerCase()}`)
+                                                onClick={async () => {
+
                                                     if (setting.toLowerCase() === 'logout') {
-                                                        dispatch(logOut())
-                                                        toastify({ type: 'success', message: 'Logout successfully' })
-                                                        navgate('/login')
+                                                        const out = await confirm({ message: 'Are you sure you want to logout?' })
+                                                        if (out) {
+                                                            dispatch(logOut())
+                                                            toastify({ type: 'success', message: 'Logout successfully' })
+                                                            navgate('/login')
+                                                        }
+                                                    } else {
+                                                        navgate(`/${setting.toLowerCase()}`)
                                                     }
                                                 }}
                                             >{setting}</Typography>

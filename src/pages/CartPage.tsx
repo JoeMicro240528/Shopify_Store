@@ -5,10 +5,14 @@ import { LockPerson } from "@mui/icons-material"
 import { Link } from "react-router"
 import { useCartPage } from "../hooks/useCartPage"
 import LottieHandeller from "../components/shared/LottieHandeller"
+import { confirm } from "../components/shared/ConfairmAction"
 import { useEffect, useState } from "react"
 import { useStartTopScreen } from "../hooks/useStartTopScreen"
-
+import { checkOut, clenCartProudactFullInfo } from "../store/cart/cartSlice"
+import { useAppDispatch } from "../store/hooks"
 const CartPage = () => {
+
+  const dispatch = useAppDispatch()
 
   useStartTopScreen()
 
@@ -18,17 +22,27 @@ const CartPage = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading('success')
-    }, 1500)
+      setLoading('idel')
+      return () => {
+        clearTimeout(timer)
+      }
+    }, 3000)
 
+  }, [loading])
+
+  useEffect(() => {
 
     return () => {
-      clearTimeout(timer)
+      dispatch(clenCartProudactFullInfo())
     }
   }, [0])
-
-
-  if (loading === 'pending' || loading === 'idle') {
+  if (loading === 'success') {
+    return <> <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="success" />
+    </Box>
+      <Typography variant="h5" align="center" color="success.main">Order Placed Successfully</Typography>
+    </>
+  }
+  if (loading === 'pending') {
     return <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}><LottieHandeller type="loading" /></Box>
   }
   if (error) {
@@ -100,7 +114,13 @@ const CartPage = () => {
                     <TextField id="outlined-basic" placeholder="Enter promo code" variant="outlined" />
                     <Button variant="contained" sx={{ height: "45px", color: "#000", fontWeight: "600", bgcolor: '#D1D5DB', textTransform: 'none', width: '100px', borderRadius: 2 }}>Apply</Button>
                   </Stack>
-                  <Button startIcon={<LockPerson />} variant="contained" sx={{ fontSize: "14px", width: "100%", fontWeight: "600", bgcolor: 'primary.main', color: '#FFF', textTransform: 'none', borderRadius: 2, '&:hover': { bgcolor: 'primary.dark' } }}>
+                  <Button onClick={async () => {
+                    const check = await confirm({ message: 'Are you sure you want to proceed to checkout?' })
+                    if (check) {
+                      setLoading('success')
+                      dispatch(checkOut())
+                    }
+                  }} startIcon={<LockPerson />} variant="contained" sx={{ fontSize: "14px", width: "100%", fontWeight: "600", bgcolor: 'primary.main', color: '#FFF', textTransform: 'none', borderRadius: 2, '&:hover': { bgcolor: 'primary.dark' } }}>
                     Proceed to Checkout
                   </Button>
                   <Box>

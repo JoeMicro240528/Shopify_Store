@@ -46,6 +46,14 @@ const cartSlice = createSlice({
 
         clenCartProudactFullInfo(state) {
             state.items = []
+            state.loading = 'idle'
+            state.error = null
+        },
+
+        checkOut(state) {
+            state.items = []
+            state.loading = 'succseeded'
+            state.error = null
         }
     },
 
@@ -60,5 +68,5 @@ export const getCartTotalQuantity = createSelector(
     }
 )
 
-export const { addToCart, changeQuantity, removeFromCart, clenCartProudactFullInfo } = cartSlice.actions
+export const { addToCart, changeQuantity, removeFromCart, clenCartProudactFullInfo, checkOut } = cartSlice.actions
 export default cartSlice.reducer

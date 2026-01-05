@@ -3,8 +3,8 @@ import notFound from "../../assets/notFound.json";
 import loading from "../../assets/loading.json";
 import error from "../../assets/error.json";
 import empty from "../../assets/empty.json";
-
-type LottieType = "loading" | "error" | "empty" | "notFound";
+import success from "../../assets/success.json";
+type LottieType = "loading" | "error" | "empty" | "notFound" | "success";
 
 interface LottieHandellerProps {
     type: LottieType;
@@ -19,6 +19,8 @@ const LottieHandeller = ({ type }: LottieHandellerProps) => {
                 return error;
             case "empty":
                 return empty;
+            case "success":
+                return success;
             default:
                 return notFound;
         }

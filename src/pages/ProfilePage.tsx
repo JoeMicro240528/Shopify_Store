@@ -5,6 +5,7 @@ import { logOut } from '../store/auth/authSlice';
 import { useAppSelector, useAppDispatch } from "../store/hooks"
 import { useStartTopScreen } from "../hooks/useStartTopScreen"
 import useToster from "../hooks/useToster";
+import { confirm } from "../components/shared/ConfairmAction";
 const ProfilePage = () => {
 
   useStartTopScreen()
@@ -57,13 +58,15 @@ const ProfilePage = () => {
           </Box>
           <Stack direction={'row'} borderRadius={3} spacing={2} p={2} bgcolor={'inherit'} color={'#333'} mt={3} sx={{ cursor: 'pointer', transition: "all 0.1s ease-in", '&:hover': { bgcolor: "#F3F4F6" } }}>
             <Logout />
-            <Typography onClick={
-              () => {
+            <Typography onClick={async () => {
+
+              const logout = await confirm({ message: 'Are you sure you want to logout?' })
+              if (logout) {
                 dispatch(logOut())
                 toastify({ type: 'success', message: 'Logout successfully' })
                 navigate('/login')
               }
-            } variant="body1" sx={{ display: { md: 'block', xs: "none" } }} color="inherit">Logout</Typography>
+            }} variant="body1" sx={{ display: { md: 'block', xs: "none" } }} color="inherit">Logout</Typography>
           </Stack>
         </Box>
         <Box width={'100%'}>
