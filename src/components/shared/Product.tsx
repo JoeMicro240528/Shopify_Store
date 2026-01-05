@@ -10,9 +10,10 @@ import { useNavigate } from "react-router"
 import { addToCart } from '../../store/cart/cartSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addToWishlist } from '../../store/wishlist/wishlistSlice';
+import useToster from '../../hooks/useToster';
 
 const Product = ({ product }: { product: TProduct }) => {
-
+    const { toastify } = useToster();
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { access_token } = useAppSelector((state) => state.auth)
@@ -62,6 +63,7 @@ const Product = ({ product }: { product: TProduct }) => {
                                 () => {
                                     if (access_token) {
                                         dispatch(addToWishlist(product))
+                                        toastify({ type: 'success', message: 'Product added to wishlist' })
                                     } else {
                                         navigate('/login')
                                     }
@@ -82,6 +84,7 @@ const Product = ({ product }: { product: TProduct }) => {
                             }} onClick={() => {
                                 if (access_token) {
                                     dispatch(addToCart(product))
+                                    toastify({ type: 'success', message: 'Product added to cart' })
                                 } else {
                                     navigate('/login')
                                 }

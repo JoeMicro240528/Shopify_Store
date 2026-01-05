@@ -4,9 +4,10 @@ import NumberSpinner from './NumberSpinner';
 import { DeleteOutline } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { changeQuantity, removeFromCart } from "../../store/cart/cartSlice";
+import useToster from "../../hooks/useToster";
 const CartItem = ({ item }: { item: TProduct }) => {
     const dispatch = useDispatch();
-
+    const { toastify } = useToster();
     const handelChangeQuantatiy = (value: number) => {
         dispatch(changeQuantity({ id: item.id, quantity: value }))
     }
@@ -48,6 +49,7 @@ const CartItem = ({ item }: { item: TProduct }) => {
                     <Typography pt={3} px={1} variant="h6" fontWeight={700} > ${item.price.toFixed(2)}</Typography>
                     <Typography onClick={() => {
                         dispatch(removeFromCart(item.id))
+                        toastify({ type: 'success', message: 'Product removed from cart' })
                     }} pt={3} color="error" sx={{ cursor: "pointer", "textTransform": "none", fontSize: "22px", fontWeight: '550', '&:hover': { textDecoration: 'underline', color: 'red' } }}><DeleteOutline /></Typography>
                 </Stack>
             </Stack>

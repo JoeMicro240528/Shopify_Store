@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router';
 import WishlistBadge from './WishlistBadge';
 import { Stack } from '@mui/material';
 import { logOut } from '../../store/auth/authSlice';
+import useToster from '../../hooks/useToster';
 
 const pages = ['Home', 'Categories', 'All Products'];
 const settings = ['Profile', 'Logout'];
@@ -29,6 +30,8 @@ function Navbar() {
     const dispatch = useAppDispatch()
 
     const { user, access_token } = useAppSelector((state) => state.auth)
+
+    const { toastify } = useToster();
 
     const navgate = useNavigate();
 
@@ -195,6 +198,7 @@ function Navbar() {
                                                     navgate(`/${setting.toLowerCase()}`)
                                                     if (setting.toLowerCase() === 'logout') {
                                                         dispatch(logOut())
+                                                        toastify({ type: 'success', message: 'Logout successfully' })
                                                         navgate('/login')
                                                     }
                                                 }}

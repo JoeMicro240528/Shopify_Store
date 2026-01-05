@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import { Navigate } from "react-router";
 export const ProtectedRoute = ({ children }: { children: React.ReactNode | React.JSX.Element }) => {
 

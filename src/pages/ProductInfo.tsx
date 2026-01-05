@@ -13,6 +13,7 @@ import { addToWishlist } from '../store/wishlist/wishlistSlice';
 import LottieHandeller from "../components/shared/LottieHandeller"
 import { useNavigate } from 'react-router';
 import { useStartTopScreen } from "../hooks/useStartTopScreen"
+import useToster from "../hooks/useToster";
 const ProductInfo = () => {
 
   useStartTopScreen()
@@ -21,6 +22,8 @@ const ProductInfo = () => {
   const navigate = useNavigate()
   const { access_token } = useAppSelector((state) => state.auth)
   const { record, loading, error } = useGetProducts();
+
+  const { toastify } = useToster();
 
   const [imageIndex, setImageIndex] = useState(0);
 
@@ -118,6 +121,7 @@ const ProductInfo = () => {
               () => {
                 if (access_token) {
                   dispatch(addToCart(record))
+                  toastify({ type: 'success', message: 'Product added to cart' })
                 } else {
                   navigate('/login')
                 }
@@ -130,6 +134,7 @@ const ProductInfo = () => {
               () => {
                 if (access_token) {
                   dispatch(addToWishlist(record))
+                  toastify({ type: 'success', message: 'Product added to wishlist' })
                 } else {
                   navigate('/login')
                 }

@@ -7,8 +7,9 @@ import MainLayouts from "../layouts/MainLayouts"
 import { lazy } from 'react'
 import { Suspense } from 'react'
 import LottieHandeller from "../components/shared/LottieHandeller";
-import { ProtectedRoute } from "../components/shared/Auth/ProtectedRoute";
+import { ProtectedRoute } from "../components/Auth/ProtectedRoute";
 import '../api/axios-global'
+import Toster from "../components/shared/Toster"
 
 const Home = lazy(() => import('../pages/Home'));
 const Categories = lazy(() => import('../pages/Categories'));
@@ -86,7 +87,10 @@ const AppRoot = () => {
     },
 
   ]);
-  return (<RouterProvider router={router} />)
+  return (<>
+    <RouterProvider router={router} />
+    <Toster />
+  </>)
 }
 
 export default AppRoot

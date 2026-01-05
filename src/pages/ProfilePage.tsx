@@ -4,6 +4,7 @@ import { useNavigate } from "react-router"
 import { logOut } from '../store/auth/authSlice';
 import { useAppSelector, useAppDispatch } from "../store/hooks"
 import { useStartTopScreen } from "../hooks/useStartTopScreen"
+import useToster from "../hooks/useToster";
 const ProfilePage = () => {
 
   useStartTopScreen()
@@ -11,6 +12,8 @@ const ProfilePage = () => {
   const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
+
+  const { toastify } = useToster();
 
   return (
     <>
@@ -57,6 +60,7 @@ const ProfilePage = () => {
             <Typography onClick={
               () => {
                 dispatch(logOut())
+                toastify({ type: 'success', message: 'Logout successfully' })
                 navigate('/login')
               }
             } variant="body1" sx={{ display: { md: 'block', xs: "none" } }} color="inherit">Logout</Typography>

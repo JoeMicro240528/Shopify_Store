@@ -12,14 +12,17 @@ import getUserData from "../store/auth/thunk/getUserData";
 import { resetUI } from "../store/auth/authSlice";
 import { usePasswordToggel } from "../hooks/usePasswordToggel";
 import { useStartTopScreen } from "../hooks/useStartTopScreen"
+import useToster from "../hooks/useToster";
 interface IFormInput extends ISingInSchema { }
 const LoginPage = () => {
 
   useStartTopScreen()
 
-  const { loading, error } = useAppSelector(state => state.auth)
+  const { loading } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
   const navgait = useNavigate();
+
+  const { toastify } = useToster();
 
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
     mode: 'onBlur',
@@ -31,8 +34,11 @@ const LoginPage = () => {
       () => {
         dispatch(getUserData('_'))
         navgait('/')
+        toastify({ type: 'success', message: 'Login successfully' })
       }
-    )
+    ).catch((err) => {
+      toastify({ type: 'error', message: err })
+    })
 
   }
 
@@ -101,7 +107,6 @@ const LoginPage = () => {
           </FormControl>
         </Box>
         <Typography variant="body1" textAlign={'center'} my={3} color="#9a9898">Don't have an account? <Typography component={'a'} onClick={() => navgait('/register')} sx={{ color: "#2A8CEE", fontWeight: "600", textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}> Sign Up </Typography></Typography>
-        {error && <Typography variant="body2" color="error.main">{error}</Typography>}
       </Container>
     </>
   )
