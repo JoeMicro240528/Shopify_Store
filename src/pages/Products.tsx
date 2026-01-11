@@ -111,13 +111,13 @@ const Products = () => {
           gap: 2
         }}>
           {
-            fullyProduct.length > 0 ? fullyProduct.slice(page * 6 - 6, page * 6).map((product) => (
+            fullyProduct.length > 0 ? fullyProduct.slice((page - 1) * 6, page * 6).map((product) => (
               <Product key={product.id} product={product} />
             )) : fackArray.map((item) => <ProductSkeleton key={item} />)
           }
         </Stack>
         {
-          fullyProduct.length > 0 && <Pagination size={"large"} color="primary" page={page} onChange={(_, value) => setPage(value)} variant="outlined" count={(Math.floor(fullyProduct.length / 6))} shape="rounded" sx={{ my: 3, display: 'flex', justifyContent: 'center', }} />
+          fullyProduct.length > 0 && <Pagination size={"large"} color="primary" page={page} onChange={(_, value) => setPage(value)} variant="outlined" count={Math.round(fullyProduct.length / 6)} shape="rounded" sx={{ my: 3, display: 'flex', justifyContent: 'center', }} />
         }
       </Box>
     </Box>
