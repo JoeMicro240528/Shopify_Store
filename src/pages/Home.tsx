@@ -22,7 +22,7 @@ const Home = () => {
       <Container sx={{ mt: 7 }} >
         <Box sx={{
           p: 5, overflow: 'hidden', borderRadius: 5, position: 'relative', textAlign:
-            'center', width: { xs: '85%', md: '93%' }
+            'center', width: { xs: '80%', md: '93%' }
           , background: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyCYZTqSojQs_x_o583eLZI4lCpx1MqepUMvLE4cSPD1y4NuJdEYpVsvJR9BuYsy8GqNntKXs3Rxlv-KExUuylPv22efma4Jczl5GGC4DywM1Ly3TXsqfTWI-7tyPAt720gFogF8RM1BsWzddQ4IPobIpW23NJ01SKHxD8eRgryQjgZP9p2iDThgNnaMYCbUoucIb5qf2HTCt3o9iVujMZYCsAHyn1y2iSn7cqq2ICNkFk1eFoOBbKF0NEivlPM_EQWySnYNifeVI") no-repeat  ',
           backgroundPosition: 'center',
           backgroundSize: 'cover',
